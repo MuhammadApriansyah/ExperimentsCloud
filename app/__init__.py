@@ -1,0 +1,28 @@
+from flask import Flask, render_template
+
+from app.config import Config
+from app.extensions import db
+from app.extensions import migrate
+from app.extensions import login_manager
+from app.auth.routes import auth
+
+
+def create_app():
+
+    app = Flask(__name__)
+
+    app.config.from_object(Config)
+
+    db.init_app(app)
+
+    login_manager.init_app(app)
+
+    migrate.init_app(app, db)
+
+    @app.route("/")
+    def home():
+        return render_template("home.html")
+
+    app.register_blueprint(auth)
+
+    return app

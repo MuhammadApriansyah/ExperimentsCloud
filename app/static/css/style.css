@@ -1,0 +1,152 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#121212;
+
+    color:#f2f2f2;
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    line-height:1.6;
+
+}
+
+header{
+
+    background:#1e1e1e;
+
+    padding:15px;
+
+    border-bottom:1px solid #333;
+
+}
+
+header h2{
+
+    margin-bottom:10px;
+
+}
+
+nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    margin-right:18px;
+
+}
+
+nav a:hover{
+
+    color:#4da3ff;
+
+}
+
+main{
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:25px;
+
+}
+
+input{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:8px;
+
+    margin-bottom:18px;
+
+    border:1px solid #444;
+
+    border-radius:6px;
+
+    background:#222;
+
+    color:white;
+
+}
+
+button{
+
+    background:#2979ff;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+}
+
+button:hover{
+
+    background:#1565c0;
+
+}
+
+.card{
+
+    background:#1d1d1d;
+
+    padding:25px;
+
+    border-radius:10px;
+
+    box-shadow:0 0 10px rgba(0,0,0,.3);
+
+}
+
+h1{
+
+    margin-bottom:20px;
+
+}
+
+p{
+
+    margin-bottom:15px;
+
+}
+
+.flash{
+    padding:14px;
+    margin-bottom:18px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.flash.success{
+    background:#1b5e20;
+    color:white;
+}
+
+.flash.warning{
+    background:#e65100;
+    color:white;
+}
+
+.flash.danger{
+    background:#b71c1c;
+    color:white;
+}
+
+.flash.info{
+    background:#1565c0;
+    color:white;
+}

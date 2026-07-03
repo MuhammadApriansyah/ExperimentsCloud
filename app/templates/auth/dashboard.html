@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h1>
+    Welcome {{ current_user.username }}
+</h1>
+
+<p>
+
+    Email :
+
+    {{ current_user.email }}
+
+</p>
+
+<p>
+
+    ExperimentsCloud Dashboard
+
+</p>
+
+{% endblock %}
