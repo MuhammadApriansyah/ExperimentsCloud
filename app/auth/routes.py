@@ -20,6 +20,15 @@ from app.auth.forms import (
 from app.extensions import db
 from app.models import User
 
+from app.constants.messages import (
+    FLASH_REGISTER_SUCCESS,
+    FLASH_LOGIN_SUCCESS,
+    FLASH_LOGOUT_SUCCESS,
+    FLASH_USERNAME_EXISTS,
+    FLASH_EMAIL_EXISTS,
+    FLASH_INVALID_LOGIN,
+)
+
 
 auth = Blueprint(
     "auth",
@@ -36,11 +45,17 @@ def register():
     if form.validate_on_submit():
 
         if User.query.filter_by(username=form.username.data).first():
-            flash("Username sudah digunakan.", "danger")
+            flash(
+                FLASH_USERNAME_EXISTS,
+                "danger",
+            )
             return redirect(url_for("auth.register"))
 
         if User.query.filter_by(email=form.email.data).first():
-            flash("Email sudah terdaftar.", "danger")
+            flash(
+                FLASH_EMAIL_EXISTS,
+                "danger",
+            )
             return redirect(url_for("auth.register"))
 
         user = User(
@@ -53,7 +68,10 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        flash("Registrasi berhasil. Silakan login.", "success")
+        flash(
+            FLASH_REGISTER_SUCCESS,
+            "success",
+        )
 
         return redirect(url_for("auth.login"))
 
@@ -80,8 +98,8 @@ def login():
             login_user(user)
 
             flash(
-                "Login berhasil.",
-                "success"
+                FLASH_LOGIN_SUCCESS,
+                "success",
             )
 
             return redirect(
@@ -89,8 +107,8 @@ def login():
             )
 
         flash(
-            "Email atau password salah.",
-            "danger"
+            FLASH_INVALID_LOGIN,
+            "danger",
         )
 
     return render_template(
@@ -113,8 +131,8 @@ def logout():
     logout_user()
 
     flash(
-        "Anda telah logout.",
-        "success"
+        FLASH_LOGOUT_SUCCESS,
+        "danger",
     )
 
     return redirect(

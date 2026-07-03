@@ -22,3 +22,7 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# User uploaded files
+storage/users/*
+!storage/users/.gitkeep

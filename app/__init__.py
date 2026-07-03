@@ -4,6 +4,9 @@ from app.config import Config
 from app.extensions import db
 from app.extensions import migrate
 from app.extensions import login_manager
+
+from app.auth import auth
+
 from app.auth.routes import auth
 from app.files import files
 

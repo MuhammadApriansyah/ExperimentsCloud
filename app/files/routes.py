@@ -4,8 +4,47 @@ from flask_login import login_required
 
 from app.files import files
 
+from flask import (
+    flash,
+    redirect,
+    url_for,
+)
+
+from app.files.forms import UploadForm
+
+from app.files.services import FileService
+
+from app.constants.messages import (
+    FLASH_UPLOAD_SUCCESS,
+)
 
 @files.route("/")
 @login_required
 def index():
     return render_template("files/index.html")
+
+@files.route("/upload", methods=["GET", "POST"])
+@login_required
+def upload():
+
+    form = UploadForm()
+
+    if form.validate_on_submit():
+
+        FileService.upload(
+            form.file.data
+        )
+
+        flash(
+            FLASH_UPLOAD_SUCCESS,
+            "success",
+        )
+
+        return redirect(
+            url_for("files.index")
+        )
+
+    return render_template(
+        "files/upload.html",
+        form=form,
+    )
