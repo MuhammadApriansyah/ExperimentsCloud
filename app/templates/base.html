@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -10,79 +11,40 @@
         content="width=device-width, initial-scale=1.0">
 
     <title>
+
         {% block title %}
+
         ExperimentsCloud
+
         {% endblock %}
+
     </title>
 
-<link
-rel="stylesheet"
-href="{{ url_for('static', filename='css/style.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
 <body>
 
-<header>
-
-    <h2>
-        ExperimentsCloud
-    </h2>
-
-    <nav>
-
-        <a href="/">
-            Home
-        </a>
-
-        {% if current_user.is_authenticated %}
-
-            <a href="{{ url_for('auth.dashboard') }}">
-                Dashboard
-            </a>
-
-            <a href="{{ url_for('auth.logout') }}">
-                Logout
-            </a>
-
-        {% else %}
-
-            <a href="{{ url_for('auth.login') }}">
-                Login
-            </a>
-
-            <a href="{{ url_for('auth.register') }}">
-                Register
-            </a>
-
-        {% endif %}
-
-    </nav>
-
-    <hr>
-
-</header>
+{% include "components/navbar.html" %}
 
 <main>
 
 <div class="card">
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="flash {{ category }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+{% include "components/flash.html" %}
 
 {% block content %}
+
 {% endblock %}
 
 </div>
 
 </main>
+
+{% include "components/footer.html" %}
 
 </body>
 
