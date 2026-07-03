@@ -73,3 +73,14 @@ class FileService:
         db.session.commit()
 
         return file
+
+    @staticmethod
+    def list_files(user):
+
+        return (
+            File.query
+            .filter_by(owner_id=user.id)
+            .order_by(File.created_at.desc())
+            .all()
+        )
+

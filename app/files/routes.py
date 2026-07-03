@@ -18,10 +18,24 @@ from app.constants.messages import (
     FLASH_UPLOAD_SUCCESS,
 )
 
+from flask_login import current_user
+
+from app.files.services import FileService
+
+
 @files.route("/")
 @login_required
 def index():
-    return render_template("files/index.html")
+
+    files = FileService.list_files(
+        current_user
+    )
+
+    return render_template(
+        "files/index.html",
+        files=files,
+    )
+
 
 @files.route("/upload", methods=["GET", "POST"])
 @login_required

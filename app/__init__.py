@@ -10,6 +10,8 @@ from app.auth import auth
 from app.auth.routes import auth
 from app.files import files
 
+from app.utils.file_utils import human_size
+from app.utils.date_utils import human_datetime
 
 def create_app():
 
@@ -29,5 +31,9 @@ def create_app():
 
     app.register_blueprint(auth)
     app.register_blueprint(files)
+
+    app.jinja_env.filters["human_size"] = human_size
+
+    app.jinja_env.filters["human_datetime"] = human_datetime
 
     return app
