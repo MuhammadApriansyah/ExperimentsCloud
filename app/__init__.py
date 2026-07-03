@@ -5,6 +5,7 @@ from app.extensions import db
 from app.extensions import migrate
 from app.extensions import login_manager
 from app.auth.routes import auth
+from app.files import files
 
 
 def create_app():
@@ -24,5 +25,6 @@ def create_app():
         return render_template("home.html")
 
     app.register_blueprint(auth)
+    app.register_blueprint(files)
 
     return app
