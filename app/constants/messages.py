@@ -45,3 +45,15 @@ FLASH_DELETE_SUCCESS = (
 FLASH_RENAME_SUCCESS = (
     "File renamed successfully."
 )
+
+FLASH_FOLDER_CREATE_SUCCESS = (
+    "Folder created successfully."
+)
+
+FLASH_FOLDER_RENAME_SUCCESS = (
+    "Folder renamed successfully."
+)
+
+FLASH_FOLDER_DELETE_SUCCESS = (
+    "Folder deleted successfully."
+)

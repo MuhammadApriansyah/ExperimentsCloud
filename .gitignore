@@ -1,44 +1,36 @@
-# Python
+# Coverage
+.coverage
+htmlcov/
+
+# Test cache
+.pytest_cache/
+
+# Python cache
 __pycache__/
 *.py[cod]
-*$py.class
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# User storage
+storage/users/*
+!storage/users/.gitkeep
+
+# Temporary storage
+storage/temp/*
+!storage/temp/.gitkeep
+
+# Trash
+storage/trash/*
+!storage/trash/.gitkeep
+
+# Database
+database/*.db
+
+# Local terminal recording
+log.txt
 
 # Virtual Environment
 venv/
 .env
-
-# Flask
-instance/
-
-# Pytest
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Logs
-logs/*.log
-
-# Database
-*.sqlite3
-database/*.db
-
-# macOS
-.DS_Store
-
-# VS Code
-.vscode/
-
-# JetBrains
-.idea/
-
-storage/users/*
-!storage/users/.gitkeep
-
-logs/*
-!logs/.gitkeep
-
-storage/temp/*
-storage/trash/*
-
-.coverage
-log.txt
