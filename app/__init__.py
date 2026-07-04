@@ -1,11 +1,10 @@
 from flask import Flask, render_template
 
-from app.config import Config
+from app.config import get_config
+
 from app.extensions import db
 from app.extensions import migrate
 from app.extensions import login_manager
-
-from app.auth import auth
 
 from app.auth.routes import auth
 from app.files import files
@@ -19,7 +18,9 @@ def create_app():
 
     app = Flask(__name__)
 
-    app.config.from_object(Config)
+    app.config.from_object(
+        get_config()
+    )
 
     db.init_app(app)
 
