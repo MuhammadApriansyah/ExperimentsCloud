@@ -15,7 +15,7 @@ class FileValidator:
 
         if extension not in ALLOWED_EXTENSIONS:
 
-            raise ValueError(
+            raise InvalidFileExtension(
                 "File extension is not allowed."
             )
 
@@ -24,6 +24,6 @@ class FileValidator:
 
         if file_size > MAX_UPLOAD_SIZE:
 
-            raise ValueError(
+            raise FileTooLarge(
                 "File size exceeds maximum limit."
             )
