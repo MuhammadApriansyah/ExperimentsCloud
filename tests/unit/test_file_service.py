@@ -130,3 +130,31 @@ def test_upload(
         assert file.stored_name == "stored.txt"
 
         assert File.query.count() == 1
+
+
+def test_rename(app):
+
+    with app.app_context():
+
+        user = create_user()
+
+        file = create_file(user)
+
+        renamed = FileService.rename(
+            file,
+            "report_final",
+        )
+
+        assert renamed.original_name == "report_final.txt"
+
+        assert renamed.id == file.id
+
+        refreshed = db.session.get(
+            File,
+            file.id,
+        )
+
+        assert (
+            refreshed.original_name
+            == "report_final.txt"
+        )

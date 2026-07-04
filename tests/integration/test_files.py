@@ -175,3 +175,134 @@ def test_delete_success(client):
 
     assert response.status_code == 302
     assert File.query.count() == 0
+
+
+def test_rename_requires_login(client):
+
+    response = client.get(
+        "/files/rename/1",
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+
+
+def test_rename_page(client):
+
+    create_user()
+
+    login(client)
+
+    response = client.post(
+        "/files/upload",
+        data={
+            "file": (
+                BytesIO(b"Hello"),
+                "example.txt",
+            ),
+        },
+        content_type="multipart/form-data",
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+
+    file = File.query.first()
+
+    response = client.get(
+        f"/files/rename/{file.id}"
+    )
+
+    assert response.status_code == 200
+
+
+def test_rename_success(client):
+
+    create_user()
+
+    login(client)
+
+    client.post(
+        "/files/upload",
+        data={
+            "file": (
+                BytesIO(b"Hello"),
+                "example.txt",
+            ),
+        },
+        content_type="multipart/form-data",
+        follow_redirects=False,
+    )
+
+    file = File.query.first()
+
+    response = client.post(
+        f"/files/rename/{file.id}",
+        data={
+            "original_name": "report_final",
+        },
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+
+    db.session.refresh(file)
+
+    assert file.original_name == "report_final.txt"
+
+
+def test_rename_other_user_file(client):
+
+    owner = create_user()
+
+    client.post(
+        "/auth/login",
+        data={
+            "email": owner.email,
+            "password": "secret123",
+        },
+        follow_redirects=True,
+    )
+
+    client.post(
+        "/files/upload",
+        data={
+            "file": (
+                BytesIO(b"Hello"),
+                "owner.txt",
+            ),
+        },
+        content_type="multipart/form-data",
+        follow_redirects=False,
+    )
+
+    file = File.query.first()
+
+    client.get(
+        "/auth/logout",
+        follow_redirects=True,
+    )
+
+    create_user(
+        username="alice",
+        email="alice@example.com",
+    )
+
+    client.post(
+        "/auth/login",
+        data={
+            "email": "alice@example.com",
+            "password": "secret123",
+        },
+        follow_redirects=True,
+    )
+
+    response = client.post(
+        f"/files/rename/{file.id}",
+        data={
+            "original_name": "hacked",
+        },
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 404

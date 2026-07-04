@@ -95,3 +95,25 @@ class FileService:
         db.session.delete(file)
 
         db.session.commit()
+
+    @staticmethod
+    def rename(file, new_name):
+
+        old_name = file.original_name
+
+        extension = Path(old_name).suffix
+
+        new_name = Path(new_name).stem.strip()
+
+        file.original_name = f"{new_name}{extension}"
+
+        db.session.commit()
+
+        logger.info(
+            "RENAME | user=%s | %s -> %s",
+            file.owner_id,
+            old_name,
+            file.original_name,
+        )
+
+        return file

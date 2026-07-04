@@ -1,25 +1,28 @@
-from flask import render_template
-
 from pathlib import Path
 
 from flask import (
     abort,
-    send_file,
     redirect,
     render_template,
     send_file,
     url_for,
     flash,
 )
+
 from flask_login import (
     current_user,
     login_required,
 )
-from app.files.forms import UploadForm
+
+from app.files.forms import (
+    UploadForm,
+    RenameFileForm,
+)
 
 from app.constants.messages import (
     FLASH_UPLOAD_SUCCESS,
     FLASH_DELETE_SUCCESS,
+    FLASH_RENAME_SUCCESS,
 )
 
 from app.files import files
@@ -128,3 +131,45 @@ def delete(file_id):
     return redirect(
         url_for("files.index")
     )
+
+@files.route(
+    "/rename/<int:file_id>",
+    methods=["GET", "POST"],
+)
+@login_required
+def rename(file_id):
+
+    file = FileService.get_user_file(
+        file_id,
+        current_user.id,
+    )
+
+    if file is None:
+        abort(404)
+
+    form = RenameFileForm(
+        original_name=Path(file.original_name).stem,
+    )
+
+    if form.validate_on_submit():
+
+        FileService.rename(
+            file,
+            form.original_name.data,
+        )
+
+        flash(
+            FLASH_RENAME_SUCCESS,
+            "success",
+        )
+
+        return redirect(
+            url_for("files.index")
+        )
+
+    return render_template(
+        "files/rename.html",
+        form=form,
+        file=file,
+    )
+

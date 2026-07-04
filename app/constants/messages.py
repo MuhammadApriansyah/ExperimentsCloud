@@ -41,3 +41,7 @@ FLASH_UPLOAD_SUCCESS = (
 FLASH_DELETE_SUCCESS = (
     "File deleted successfully."
 )
+
+FLASH_RENAME_SUCCESS = (
+    "File renamed successfully."
+)

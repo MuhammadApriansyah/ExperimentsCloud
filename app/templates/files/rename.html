@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Rename File</h2>
+
+<form method="POST">
+
+    {{ form.hidden_tag() }}
+
+    {{ form.original_name.label }}
+
+    {{ form.original_name() }}
+
+    {{ form.submit() }}
+
+</form>
+
+{% endblock %}
