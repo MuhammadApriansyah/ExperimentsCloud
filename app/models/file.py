@@ -54,7 +54,20 @@ class File(db.Model):
         back_populates="files"
     )
 
+    folder = db.relationship(
+        "Folder",
+        back_populates="files",
+    )
+
     def __repr__(self):
         return (
             f"<File {self.original_name}>"
         )
+
+    folder_id = db.Column(
+        db.Integer,
+        db.ForeignKey("folders.id"),
+        nullable=True,
+     )
+
+

@@ -39,3 +39,6 @@ logs/*
 
 storage/temp/*
 storage/trash/*
+
+.coverage
+log.txt
