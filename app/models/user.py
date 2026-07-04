@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 from app.extensions import db
 from flask_login import UserMixin
 from werkzeug.security import (
@@ -31,7 +31,7 @@ class User(UserMixin, db.Model):
 
     created_at = db.Column(
         db.DateTime,
-        default=datetime.utcnow
+        default=lambda: datetime.now(UTC)
     )
 
     def set_password(self, password):
