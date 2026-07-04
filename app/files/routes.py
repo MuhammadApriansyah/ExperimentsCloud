@@ -1,27 +1,24 @@
 from flask import render_template
 
-from flask_login import login_required
-
-from app.files import files
+from pathlib import Path
 
 from flask import (
-    flash,
-    redirect,
-    url_for,
+    abort,
+    send_file,
 )
-
+from flask_login import (
+    current_user,
+    login_required,
+)
 from app.files.forms import UploadForm
-
-from app.files.services import FileService
 
 from app.constants.messages import (
     FLASH_UPLOAD_SUCCESS,
 )
 
-from flask_login import current_user
-
+from app.files import files
 from app.files.services import FileService
-
+from app.services.storage_service import StorageService
 
 @files.route("/")
 @login_required
@@ -61,4 +58,30 @@ def upload():
     return render_template(
         "files/upload.html",
         form=form,
+    )
+
+@files.route("/download/<int:file_id>")
+@login_required
+def download(file_id):
+
+    file = FileService.get_user_file(
+        file_id,
+        current_user.id
+    )
+
+    if file is None:
+        abort(404)
+
+    path = StorageService.file_path(
+        current_user.id,
+        file.stored_name,
+    )
+
+    if not StorageService.exists(path):
+        abort(404)
+
+    return send_file(
+        path,
+        as_attachment=True,
+        download_name=file.original_name,
     )

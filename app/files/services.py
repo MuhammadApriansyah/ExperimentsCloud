@@ -6,10 +6,7 @@ from app.extensions import db
 
 from app.models import File
 
-from app.files.utils import (
-    generate_stored_name,
-    user_directory,
-)
+from app.files.utils import generate_stored_name
 
 from app.files.validators import (
     FileValidator,
@@ -45,8 +42,9 @@ class FileService:
             extension
         )
 
-        directory = user_directory(
-            current_user.id
+        StorageService.file_path(
+            current_user.id,
+            file.stored_name,
         )
 
         destination = (
@@ -66,7 +64,6 @@ class FileService:
             file_extension=extension,
             mime_type=uploaded_file.mimetype,
             file_size=size,
-            storage_path=str(destination),
         )
 
         db.session.add(file)
@@ -84,3 +81,9 @@ class FileService:
             .all()
         )
 
+    @staticmethod
+    def get_user_file(file_id, user_id):
+        return File.query.filter_by(
+            id=file_id,
+            owner_id=user_id
+        ).first()

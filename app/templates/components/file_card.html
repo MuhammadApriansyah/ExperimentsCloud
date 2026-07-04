@@ -1,0 +1,43 @@
+<div class="file-card">
+
+    <div class="file-icon">
+
+        📄
+
+    </div>
+
+    <div class="file-info">
+
+        <h3>
+
+            {{ file.original_name }}
+
+        </h3>
+
+        <p>
+
+            {{ file.file_size | human_size }}
+
+        </p>
+
+        <p>
+
+            {{ file.created_at | human_datetime }}
+
+        </p>
+
+    </div>
+
+    <div class="file-actions">
+
+        <a
+            class="btn btn-primary"
+            href="{{ url_for('files.download', file_id=file.id) }}">
+
+            Download
+
+        </a>
+
+    </div>
+
+</div>

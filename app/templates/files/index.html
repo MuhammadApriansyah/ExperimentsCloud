@@ -20,33 +20,37 @@ Upload File
 
 {% if files %}
 
-<table>
+{% if files %}
 
-<tr>
+<div class="file-list">
 
-<th>Name</th>
+    {% for file in files %}
 
-<th>Size</th>
+        {% include "components/file_card.html" %}
 
-<th>Uploaded</th>
+    {% endfor %}
 
-</tr>
+</div>
 
-{% for file in files %}
+{% else %}
 
-<tr>
+<div class="empty-state">
 
-<td>{{ file.original_name }}</td>
+    <h3>📁</h3>
 
-<td>{{ file.file_size | human_size }}</td>
+    <p>No files uploaded yet.</p>
 
-<td>{{ file.created_at | human_datetime }}</td>
+    <a
+        class="btn btn-primary"
+        href="{{ url_for('files.upload') }}">
 
-</tr>
+        Upload First File
 
-{% endfor %}
+    </a>
 
-</table>
+</div>
+
+{% endif %}
 
 {% else %}
 

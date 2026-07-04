@@ -391,3 +391,81 @@ p{
 
 }
 
+/* =======================================================
+   FILE CARD
+======================================================= */
+
+.file-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+    margin-top:20px;
+
+}
+
+.file-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px;
+
+    border:1px solid #3a3a3a;
+
+    border-radius:10px;
+
+    background:#262626;
+
+}
+
+.file-card:hover{
+
+    border-color:#1565c0;
+
+}
+
+.file-icon{
+
+    font-size:36px;
+
+    margin-right:20px;
+
+}
+
+.file-info{
+
+    flex:1;
+
+}
+
+.file-info h3{
+
+    margin:0;
+
+    font-size:18px;
+
+}
+
+.file-info p{
+
+    margin:4px 0;
+
+    color:#bbbbbb;
+
+}
+
+.file-actions{
+
+    display:flex;
+
+    gap:10px;
+
+}
+

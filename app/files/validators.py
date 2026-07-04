@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from app.files.constants import (
+from app.constants.storage import (
     ALLOWED_EXTENSIONS,
     MAX_UPLOAD_SIZE,
 )
