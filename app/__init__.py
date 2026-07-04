@@ -13,6 +13,8 @@ from app.files import files
 from app.utils.file_utils import human_size
 from app.utils.date_utils import human_datetime
 
+from app.errors import errors
+
 def create_app():
 
     app = Flask(__name__)
@@ -31,6 +33,7 @@ def create_app():
 
     app.register_blueprint(auth)
     app.register_blueprint(files)
+    app.register_blueprint(errors)
 
     app.jinja_env.filters["human_size"] = human_size
 

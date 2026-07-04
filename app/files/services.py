@@ -15,7 +15,7 @@ from app.files.validators import (
 from app.services.storage_service import (
     StorageService,
 )
-
+from app.services.logging_service import logger
 
 class FileService:
 
@@ -35,6 +35,7 @@ class FileService:
         extension = (
             Path(uploaded_file.filename)
             .suffix
+            .lower()
             .lstrip(".")
         )
 
@@ -42,14 +43,9 @@ class FileService:
             extension
         )
 
-        StorageService.file_path(
+        destination = StorageService.file_path(
             current_user.id,
-            file.stored_name,
-        )
-
-        destination = (
-            directory /
-            stored_name
+            stored_name,
         )
 
         StorageService.save(
@@ -68,6 +64,8 @@ class FileService:
 
         db.session.add(file)
         db.session.commit()
+
+        
 
         return file
 

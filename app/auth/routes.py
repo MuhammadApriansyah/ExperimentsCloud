@@ -10,6 +10,7 @@ from flask_login import (
     login_user,
     logout_user,
     login_required,
+    current_user,
 )
 
 from app.auth.forms import (
@@ -28,6 +29,8 @@ from app.constants.messages import (
     FLASH_EMAIL_EXISTS,
     FLASH_INVALID_LOGIN,
 )
+
+from app.logging import logger
 
 
 auth = Blueprint(
@@ -97,6 +100,11 @@ def login():
 
             login_user(user)
 
+            logger.info(
+                "LOGIN | user=%s",
+                user.email,
+            )
+
             flash(
                 FLASH_LOGIN_SUCCESS,
                 "success",
@@ -127,6 +135,11 @@ def dashboard():
 @auth.route("/logout")
 @login_required
 def logout():
+
+    logger.info(
+        "LOGOUT | user=%s",
+        current_user.email,
+    )
 
     logout_user()
 

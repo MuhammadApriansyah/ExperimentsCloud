@@ -25,6 +25,7 @@ from app.constants.messages import (
 from app.files import files
 from app.files.services import FileService
 from app.services.storage_service import StorageService
+from app.logging import logger
 
 @files.route("/")
 @login_required
@@ -86,6 +87,12 @@ def download(file_id):
     if not StorageService.exists(path):
         abort(404)
 
+    logger.info(
+        "DOWNLOAD | user=%s | file=%s",
+        current_user.id,
+        file.original_name,
+    )
+
     return send_file(
         path,
         as_attachment=True,
@@ -105,6 +112,12 @@ def delete(file_id):
         abort(404)
 
     FileService.delete(file)
+
+    logger.info(
+        "DELETE | user=%s | file=%s",
+         current_user.id,
+         file.original_name,
+    )
 
     flash(
         FLASH_DELETE_SUCCESS,
