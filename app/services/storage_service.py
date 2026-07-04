@@ -1,14 +1,15 @@
 from pathlib import Path
 
-from app.constants.storage import USER_STORAGE
-
+from flask import current_app
 
 class StorageService:
 
     @staticmethod
     def user_directory(user_id: int) -> Path:
-
-        return USER_STORAGE / str(user_id)
+        return (
+            current_app.config["USER_STORAGE"]
+            / str(user_id)
+        )
 
     @staticmethod
     def file_path(user_id: int, stored_name: str) -> Path:
