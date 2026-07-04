@@ -30,7 +30,7 @@ from app.constants.messages import (
     FLASH_INVALID_LOGIN,
 )
 
-from app.logging import logger
+from app.services.logging_service import logger
 
 
 auth = Blueprint(

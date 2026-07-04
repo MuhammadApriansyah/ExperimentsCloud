@@ -25,7 +25,7 @@ from app.constants.messages import (
 from app.files import files
 from app.files.services import FileService
 from app.services.storage_service import StorageService
-from app.logging import logger
+from app.services.logging_service import logger
 
 @files.route("/")
 @login_required
