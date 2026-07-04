@@ -26,3 +26,11 @@ Thumbs.db
 # User uploaded files
 storage/users/*
 !storage/users/.gitkeep
+
+tests/__pycache__/
+
+.pytest_cache/
+
+.coverage
+
+htmlcov/

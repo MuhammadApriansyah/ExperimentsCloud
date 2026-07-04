@@ -25,3 +25,11 @@ Reusable UI components are stored in:
 - templates/components/footer.html
 
 The base template only assembles components and provides content blocks.
+
+Architecture Version
+
+v0.3
+
+Status
+
+Foundation Stable
