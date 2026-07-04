@@ -81,3 +81,15 @@ v0.3.3
 ## Status
 
 Active Development
+
+## Developer Commands
+
+```bash
+./scripts/dev.sh clean
+
+./scripts/dev.sh check
+
+./scripts/dev.sh verify
+
+./scripts/dev.sh test
+```
