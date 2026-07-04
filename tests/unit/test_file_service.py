@@ -158,3 +158,86 @@ def test_rename(app):
             refreshed.original_name
             == "report_final.txt"
         )
+
+
+from app.models import Folder
+
+
+def create_folder(user):
+
+    folder = Folder(
+        name="Documents",
+        owner=user,
+    )
+
+    db.session.add(folder)
+    db.session.commit()
+
+    return folder
+
+
+def test_list_files_in_folder(app):
+
+    with app.app_context():
+
+        user = create_user()
+
+        folder = create_folder(user)
+
+        file1 = File(
+            owner=user,
+            folder=folder,
+            original_name="a.txt",
+            stored_name="a.txt",
+            file_extension="txt",
+            mime_type="text/plain",
+            file_size=100,
+        )
+
+        file2 = File(
+            owner=user,
+            folder=folder,
+            original_name="b.txt",
+            stored_name="b.txt",
+            file_extension="txt",
+            mime_type="text/plain",
+            file_size=200,
+        )
+
+        db.session.add_all([
+            file1,
+            file2,
+        ])
+
+        db.session.commit()
+
+        files = FileService.list_files(
+            user,
+            folder,
+        )
+
+        assert len(files) == 2
+
+        assert {
+            file.original_name
+            for file in files
+        } == {
+            "a.txt",
+            "b.txt",
+        }
+
+
+def test_list_files_empty_folder(app):
+
+    with app.app_context():
+
+        user = create_user()
+
+        folder = create_folder(user)
+
+        files = FileService.list_files(
+            user,
+            folder,
+        )
+
+        assert files == []

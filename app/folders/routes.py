@@ -1,5 +1,4 @@
 from flask import (
-    abort,
     render_template,
     redirect,
     url_for,
@@ -27,6 +26,11 @@ from app.constants.messages import (
 )
 
 
+from app.helpers import (
+    get_owned_folder_or_404,
+)
+
+
 @folders.route("/")
 @login_required
 def index():
@@ -38,6 +42,29 @@ def index():
     return render_template(
         "folders/index.html",
         folders=folder_list,
+    )
+
+
+@folders.route(
+    "/<int:folder_id>",
+)
+@login_required
+def open(folder_id):
+
+    folder = get_owned_folder_or_404(
+        folder_id,
+        current_user.id,
+    )
+
+    children = FolderService.list_children(
+        folder,
+    )
+
+    return render_template(
+        "folders/index.html",
+        folders=children,
+        current_folder=folder,
+        path=FolderService.build_path(folder),
     )
 
 
@@ -79,13 +106,10 @@ def create():
 @login_required
 def rename(folder_id):
 
-    folder = FolderService.get_user_folder(
+    folder = get_owned_folder_or_404(
         folder_id,
         current_user.id,
     )
-
-    if folder is None:
-        abort(404)
 
     form = RenameFolderForm(
         name=folder.name,
@@ -121,13 +145,10 @@ def rename(folder_id):
 @login_required
 def delete(folder_id):
 
-    folder = FolderService.get_user_folder(
+    folder = get_owned_folder_or_404(
         folder_id,
         current_user.id,
     )
-
-    if folder is None:
-        abort(404)
 
     FolderService.delete(folder)
 

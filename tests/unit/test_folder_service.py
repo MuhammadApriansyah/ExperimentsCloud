@@ -144,3 +144,150 @@ def test_delete(app):
         )
 
         assert Folder.query.count() == 0
+
+
+def test_list_children(app):
+
+    with app.app_context():
+
+        user = create_user()
+
+        parent = FolderService.create(
+            "Documents",
+            user,
+        )
+
+        FolderService.create(
+            "Project A",
+            user,
+            parent,
+        )
+
+        FolderService.create(
+            "Project B",
+            user,
+            parent,
+        )
+
+        children = FolderService.list_children(
+            parent,
+        )
+
+        assert len(children) == 2
+
+        assert children[0].name == "Project A"
+
+        assert children[1].name == "Project B"
+
+
+def test_list_children_empty(app):
+
+    with app.app_context():
+
+        user = create_user()
+
+        parent = FolderService.create(
+            "Documents",
+            user,
+        )
+
+        children = FolderService.list_children(
+            parent,
+        )
+
+        assert children == []
+
+
+def test_get_parent(app):
+
+    with app.app_context():
+
+        user = create_user()
+
+        parent = FolderService.create(
+            "Documents",
+            user,
+        )
+
+        child = FolderService.create(
+            "Project A",
+            user,
+            parent,
+        )
+
+        result = FolderService.get_parent(
+            child,
+        )
+
+        assert result == parent
+
+
+def test_get_parent_root(app):
+
+    with app.app_context():
+
+        user = create_user()
+
+        root = FolderService.create(
+            "Documents",
+            user,
+        )
+
+        assert (
+            FolderService.get_parent(root)
+            is None
+        )
+
+
+def test_build_path(app):
+
+    with app.app_context():
+
+        user = create_user()
+
+        documents = FolderService.create(
+            "Documents",
+            user,
+        )
+
+        project = FolderService.create(
+            "Project A",
+            user,
+            documents,
+        )
+
+        backend = FolderService.create(
+            "Backend",
+            user,
+            project,
+        )
+
+        path = FolderService.build_path(
+            backend,
+        )
+
+        assert [f.name for f in path] == [
+            "Documents",
+            "Project A",
+            "Backend",
+        ]
+
+
+def test_build_path_root(app):
+
+    with app.app_context():
+
+        user = create_user()
+
+        root = FolderService.create(
+            "Documents",
+            user,
+        )
+
+        path = FolderService.build_path(
+            root,
+        )
+
+        assert [f.name for f in path] == [
+            "Documents",
+        ]

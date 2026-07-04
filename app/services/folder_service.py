@@ -47,6 +47,42 @@ class FolderService:
         )
 
     @staticmethod
+    def list_children(folder):
+
+        return (
+            Folder.query
+            .filter_by(
+                parent_id=folder.id,
+            )
+            .order_by(
+                Folder.name.asc()
+            )
+            .all()
+        )
+
+    @staticmethod
+    def get_parent(folder):
+
+        return folder.parent
+
+    @staticmethod
+    def build_path(folder):
+
+        path = []
+
+        current = folder
+
+        while current is not None:
+
+            path.append(current)
+
+            current = current.parent
+
+        path.reverse()
+
+        return path
+
+    @staticmethod
     def get_user_folder(folder_id, user_id):
 
         return (

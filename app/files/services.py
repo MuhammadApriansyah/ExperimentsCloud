@@ -66,12 +66,32 @@ class FileService:
         return file
 
     @staticmethod
-    def list_files(user):
+    def list_files(
+        user,
+        folder=None,
+    ):
+
+        query = File.query.filter_by(
+            owner_id=user.id,
+        )
+
+        if folder is None:
+
+            query = query.filter_by(
+                folder_id=None,
+            )
+
+        else:
+
+            query = query.filter_by(
+                folder_id=folder.id,
+            )
 
         return (
-            File.query
-            .filter_by(owner_id=user.id)
-            .order_by(File.created_at.desc())
+            query
+            .order_by(
+                File.created_at.desc()
+            )
             .all()
         )
 

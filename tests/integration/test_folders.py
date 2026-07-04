@@ -252,3 +252,166 @@ def test_delete_other_user_folder(client):
     )
 
     assert response.status_code == 404
+
+
+def test_open_folder(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        parent = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(parent)
+        db.session.commit()
+
+        child = Folder(
+            name="Project A",
+            owner=user,
+            parent=parent,
+        )
+
+        db.session.add(child)
+        db.session.commit()
+
+        folder_id = parent.id
+
+    response = client.get(
+        f"/folders/{folder_id}",
+        follow_redirects=True,
+    )
+
+    assert response.status_code == 200
+
+    assert b"Project A" in response.data
+
+
+def test_open_other_user_folder(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        other = User(
+            username="other",
+            email="other@example.com",
+        )
+
+        other.set_password("secret123")
+
+        db.session.add(other)
+        db.session.commit()
+
+        folder = Folder(
+            name="Secret",
+            owner=other,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        folder_id = folder.id
+
+    response = client.get(
+        f"/folders/{folder_id}",
+    )
+
+    assert response.status_code == 404
+
+
+from unittest.mock import patch
+
+
+@patch("app.folders.routes.render_template")
+def test_open_folder_passes_path(
+    render_template_mock,
+    client,
+):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        parent = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(parent)
+
+        db.session.commit()
+
+        child = Folder(
+            name="Project A",
+            owner=user,
+            parent=parent,
+        )
+
+        db.session.add(child)
+
+        db.session.commit()
+
+        folder_id = child.id
+
+    client.get(
+        f"/folders/{folder_id}",
+    )
+
+    _, kwargs = render_template_mock.call_args
+
+    assert "path" in kwargs
+
+    assert [f.name for f in kwargs["path"]] == [
+        "Documents",
+        "Project A",
+    ]
+
+
+def test_open_folder_shows_breadcrumb(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        documents = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(documents)
+        db.session.commit()
+
+        project = Folder(
+            name="Project A",
+            owner=user,
+            parent=documents,
+        )
+
+        db.session.add(project)
+        db.session.commit()
+
+        response = client.get(
+            f"/folders/{project.id}",
+            follow_redirects=True,
+        )
+
+    assert response.status_code == 200
+
+    assert b"Documents" in response.data
+
+    assert b"Project A" in response.data
