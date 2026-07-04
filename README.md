@@ -76,7 +76,7 @@ templates/
 
 ## Current Version
 
-v0.3.3
+v0.8.0
 
 ## Status
 
@@ -91,3 +91,16 @@ Active Development
 | ./scripts/dev.sh verify | Full verification |
 | ./scripts/dev.sh test | Run pytest |
 | ./scripts/dev.sh lint | Static analysis |
+
+## Latest Release
+
+### v0.8.0 Stable
+
+- Modular service architecture
+- Unit & Integration Tests
+- CI scripts
+- Storage Service
+- Logging Service
+- File Service
+- Authentication
+- Repository cleanup
