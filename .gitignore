@@ -1,36 +1,32 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
 
 # Virtual Environment
 venv/
-
-# Environment
 .env
+
+# Flask
+instance/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Logs
 logs/*.log
 
-# Temporary
-*.tmp
+# Database
+*.db
+*.sqlite3
 
-# OS
+# macOS
 .DS_Store
-Thumbs.db
 
-# IDE
+# VS Code
 .vscode/
+
+# JetBrains
 .idea/
-
-# User uploaded files
-storage/users/*
-!storage/users/.gitkeep
-
-tests/__pycache__/
-
-.pytest_cache/
-
-.coverage
-
-htmlcov/
