@@ -84,12 +84,10 @@ Active Development
 
 ## Developer Commands
 
-```bash
-./scripts/dev.sh clean
-
-./scripts/dev.sh check
-
-./scripts/dev.sh verify
-
-./scripts/dev.sh test
-```
+| Command | Description |
+|---------|-------------|
+| ./scripts/dev.sh clean | Remove cache and temporary files |
+| ./scripts/dev.sh check | Static verification |
+| ./scripts/dev.sh verify | Full verification |
+| ./scripts/dev.sh test | Run pytest |
+| ./scripts/dev.sh lint | Static analysis |

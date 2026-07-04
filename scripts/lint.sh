@@ -2,4 +2,4 @@
 
 set -e
 
-pytest -v
+python -m compileall app
