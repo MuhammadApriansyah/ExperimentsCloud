@@ -469,3 +469,19 @@ p{
 
 }
 
+.btn-danger {
+
+    background: #dc3545;
+
+    color: white;
+
+    border: none;
+
+}
+
+.btn-danger:hover {
+
+    background: #bb2d3b;
+
+}
+

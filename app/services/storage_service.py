@@ -45,3 +45,4 @@ class StorageService:
 
         if path.exists():
             path.unlink()
+

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+){% extends "base.html" %}
 
 {% block title %}
 My Files
@@ -9,16 +9,11 @@ My Files
 <h2>My Files</h2>
 
 <p>
-
-<a class="btn btn-primary" href="{{ url_for('files.upload') }}">
-
-Upload File
-
-</a>
-
+    <a class="btn btn-primary"
+       href="{{ url_for('files.upload') }}">
+        Upload File
+    </a>
 </p>
-
-{% if files %}
 
 {% if files %}
 
@@ -40,35 +35,12 @@ Upload File
 
     <p>No files uploaded yet.</p>
 
-    <a
-        class="btn btn-primary"
-        href="{{ url_for('files.upload') }}">
+    <p>Upload your first file to get started.</p>
 
+    <a class="btn btn-primary"
+       href="{{ url_for('files.upload') }}">
         Upload First File
-
     </a>
-
-</div>
-
-{% endif %}
-
-{% else %}
-
-<div class="empty-state">
-
-<h3>📁</h3>
-
-<p>
-
-No files uploaded yet.
-
-</p>
-
-<p>
-
-Upload your first file to get started.
-
-</p>
 
 </div>
 

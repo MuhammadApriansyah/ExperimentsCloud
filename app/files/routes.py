@@ -5,6 +5,11 @@ from pathlib import Path
 from flask import (
     abort,
     send_file,
+    redirect,
+    render_template,
+    send_file,
+    url_for,
+    flash,
 )
 from flask_login import (
     current_user,
@@ -14,6 +19,7 @@ from app.files.forms import UploadForm
 
 from app.constants.messages import (
     FLASH_UPLOAD_SUCCESS,
+    FLASH_DELETE_SUCCESS,
 )
 
 from app.files import files
@@ -84,4 +90,27 @@ def download(file_id):
         path,
         as_attachment=True,
         download_name=file.original_name,
+    )
+
+@files.route("/delete/<int:file_id>", methods=["POST"])
+@login_required
+def delete(file_id):
+
+    file = FileService.get_user_file(
+        file_id,
+        current_user.id,
+    )
+
+    if file is None:
+        abort(404)
+
+    FileService.delete(file)
+
+    flash(
+        FLASH_DELETE_SUCCESS,
+        "success",
+    )
+
+    return redirect(
+        url_for("files.index")
     )

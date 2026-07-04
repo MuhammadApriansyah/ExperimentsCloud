@@ -37,3 +37,7 @@ FLASH_INVALID_LOGIN = (
 FLASH_UPLOAD_SUCCESS = (
     "File uploaded successfully."
 )
+
+FLASH_DELETE_SUCCESS = (
+    "File deleted successfully."
+)

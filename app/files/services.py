@@ -87,3 +87,17 @@ class FileService:
             id=file_id,
             owner_id=user_id
         ).first()
+
+    @staticmethod
+    def delete(file):
+
+        path = StorageService.file_path(
+            file.owner_id,
+            file.stored_name,
+        )
+
+        StorageService.delete(path)
+
+        db.session.delete(file)
+
+        db.session.commit()
