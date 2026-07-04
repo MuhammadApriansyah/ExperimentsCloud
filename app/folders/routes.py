@@ -30,6 +30,8 @@ from app.helpers import (
     get_owned_folder_or_404,
 )
 
+from app.files.services import FileService
+
 
 @folders.route("/")
 @login_required
@@ -60,9 +62,15 @@ def open(folder_id):
         folder,
     )
 
+    files = FileService.list_files(
+        current_user,
+        folder,
+    )
+
     return render_template(
         "folders/index.html",
         folders=children,
+        files=files,
         current_folder=folder,
         path=FolderService.build_path(folder),
     )

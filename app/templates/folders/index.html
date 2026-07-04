@@ -64,4 +64,24 @@
 
 </ul>
 
+<h3>Files</h3>
+
+<ul>
+
+{% for file in files %}
+
+<li>
+
+    {{ file.original_name }}
+
+</li>
+
+{% else %}
+
+<li>No files.</li>
+
+{% endfor %}
+
+</ul>
+
 {% endblock %}

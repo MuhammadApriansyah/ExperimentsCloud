@@ -92,7 +92,10 @@ def test_create_folder_success(client):
         in response.data
     )
 
-from app.models import Folder
+from app.models import (
+    Folder,
+    File,
+)
 
 
 def test_rename_page(client):
@@ -415,3 +418,97 @@ def test_open_folder_shows_breadcrumb(client):
     assert b"Documents" in response.data
 
     assert b"Project A" in response.data
+
+
+from unittest.mock import patch
+
+
+@patch("app.folders.routes.render_template")
+def test_open_folder_passes_files(
+    render_template_mock,
+    client,
+):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        file = File(
+            owner=user,
+            folder=folder,
+            original_name="report.pdf",
+            stored_name="report.pdf",
+            file_extension="pdf",
+            mime_type="application/pdf",
+            file_size=100,
+        )
+
+        db.session.add(file)
+        db.session.commit()
+
+        folder_id = folder.id
+
+    client.get(
+        f"/folders/{folder_id}",
+    )
+
+    _, kwargs = render_template_mock.call_args
+
+    assert "files" in kwargs
+
+    assert len(kwargs["files"]) == 1
+
+    assert kwargs["files"][0].original_name == "report.pdf"
+
+
+def test_open_folder_shows_files(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        file = File(
+            owner=user,
+            folder=folder,
+            original_name="report.pdf",
+            stored_name="report.pdf",
+            file_extension="pdf",
+            mime_type="application/pdf",
+            file_size=100,
+        )
+
+        db.session.add(file)
+        db.session.commit()
+
+        response = client.get(
+            f"/folders/{folder.id}",
+            follow_redirects=True,
+        )
+
+    assert response.status_code == 200
+
+    assert b"report.pdf" in response.data
