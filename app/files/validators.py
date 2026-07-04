@@ -2,6 +2,11 @@ from pathlib import Path
 
 from flask import current_app
 
+from app.exceptions.file import (
+    InvalidFileExtension,
+    FileTooLarge,
+)
+
 class FileValidator:
 
     @staticmethod

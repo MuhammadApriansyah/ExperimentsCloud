@@ -1,7 +1,5 @@
 from pathlib import Path
 
-from flask_login import current_user
-
 from app.extensions import db
 
 from app.models import File
@@ -20,7 +18,7 @@ from app.services.logging_service import logger
 class FileService:
 
     @staticmethod
-    def upload(uploaded_file):
+    def upload(uploaded_file, user):
 
         FileValidator.validate_extension(
             uploaded_file.filename
@@ -44,7 +42,7 @@ class FileService:
         )
 
         destination = StorageService.file_path(
-            current_user.id,
+            user.id,
             stored_name,
         )
 
@@ -54,7 +52,7 @@ class FileService:
         )
 
         file = File(
-            owner=current_user,
+            owner=user,
             original_name=uploaded_file.filename,
             stored_name=stored_name,
             file_extension=extension,
@@ -64,8 +62,6 @@ class FileService:
 
         db.session.add(file)
         db.session.commit()
-
-        
 
         return file
 

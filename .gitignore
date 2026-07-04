@@ -19,8 +19,8 @@ htmlcov/
 logs/*.log
 
 # Database
-*.db
 *.sqlite3
+database/*.db
 
 # macOS
 .DS_Store
@@ -30,3 +30,12 @@ logs/*.log
 
 # JetBrains
 .idea/
+
+storage/users/*
+!storage/users/.gitkeep
+
+logs/*
+!logs/.gitkeep
+
+storage/temp/*
+storage/trash/*

@@ -2,4 +2,9 @@
 
 set -e
 
-pytest -v
+pytest \
+    -v \
+    --cov=app \
+    --cov-branch \
+    --cov-report=term-missing \
+    --cov-report=html

@@ -50,7 +50,8 @@ def upload():
     if form.validate_on_submit():
 
         FileService.upload(
-            form.file.data
+            form.file.data,
+            current_user,
         )
 
         flash(

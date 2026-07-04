@@ -26,6 +26,11 @@ lint)
 
     bash scripts/lint.sh
     ;;
+
+coverage)
+
+    bash scripts/test.sh
+    ;;
 *)
 
     echo
@@ -37,6 +42,7 @@ lint)
     echo "  ./scripts/dev.sh verify"
     echo "  ./scripts/dev.sh check"
     echo "  ./scripts/dev.sh test"
+    echo "  ./scripts/dev.sh coverage"
     echo
     ;;
 
