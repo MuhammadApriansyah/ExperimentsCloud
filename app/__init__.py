@@ -16,10 +16,17 @@ from app.errors import errors
 
 from app.folders.routes import folders
 
+from app.helpers import (
+    format_file_size,
+)
 
 def create_app():
 
     app = Flask(__name__)
+
+    app.jinja_env.globals.update(
+        format_file_size=format_file_size,
+    )
 
     app.config.from_object(
         get_config()

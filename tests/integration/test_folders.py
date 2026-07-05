@@ -512,3 +512,47 @@ def test_open_folder_shows_files(client):
     assert response.status_code == 200
 
     assert b"report.pdf" in response.data
+
+
+def test_open_folder_shows_file_size(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        file = File(
+            owner=user,
+            folder=folder,
+            original_name="report.pdf",
+            stored_name="report.pdf",
+            file_extension="pdf",
+            mime_type="application/pdf",
+            file_size=2048,
+        )
+
+        db.session.add(file)
+        db.session.commit()
+
+        response = client.get(
+            f"/folders/{folder.id}",
+            follow_redirects=True,
+        )
+
+    assert response.status_code == 200
+
+    assert b"2 KB" in response.data
+
+
+
