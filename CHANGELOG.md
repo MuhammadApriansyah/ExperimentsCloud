@@ -1,42 +1,126 @@
 # Changelog
 
-Semua perubahan penting pada proyek ini akan didokumentasikan di sini.
+Semua perubahan penting pada proyek **ExperimentsCloud** didokumentasikan dalam berkas ini.
+
+Proyek ini mengikuti **milestone-based semantic versioning**.
+
+- **v0.x** → Foundation & Initial Development
+- **v1.x** → Structured Sprint Development
+
+---
+
+# Development Releases
 
 ## [v1.2.0-dev] - Sprint 1.8
+### Objective
+Audio Metadata Foundation
 
 ### Added
-- Audio metadata extraction using Mutagen.
-- MetadataGenerator.audio_duration().
-- Audio duration integration into FileMetadataService.
+
+- Audio metadata extraction using **Mutagen**.
+- `MetadataGenerator.audio_duration()`.
+- Audio duration integration into `FileMetadataService`.
 - Unit tests for audio metadata.
 - Service tests for audio metadata.
 
 ### Improved
-- Metadata pipeline now supports:
-  - Checksum
-  - Image metadata
-  - PDF metadata
-  - Audio duration
+
+Metadata Engine now supports:
+
+- SHA256 Checksum
+- Image Resolution
+- PDF Page Count
+- Audio Duration
 
 ### Testing
-- 140/140 tests passed.
+
+- MetadataGenerator tests: **10/10 PASSED**
+- FileMetadataService tests: **5/5 PASSED**
+- Full Regression Suite: **140/140 PASSED**
+
+### Status
+
+✅ Completed
 
 ---
+
+## [v1.1.0-dev] - Sprint 1.7
+
+### Objective
+
+PDF Metadata Foundation
+
+### Added
+
+- PDF page count extraction using **pypdf**.
+- `MetadataGenerator.pdf_page_count()`.
+- PDF metadata integration into `FileMetadataService`.
+- Unit tests for PDF metadata.
+- Service tests for PDF metadata.
+
+### Improved
+
+Metadata Engine now supports:
+
+- SHA256 Checksum
+- Image Resolution
+- PDF Page Count
+
+### Testing
+
+- Full Regression Suite: **137/137 PASSED**
+
+### Status
+
+✅ Completed
+
+---
+
+## [v1.0.0-dev] - Sprint 1.6
+
+### Objective
+
+Image Metadata Foundation
+
+### Added
+
+- Image dimension extraction using **Pillow**.
+- `MetadataGenerator.image_size()`.
+- Image metadata integration into `FileMetadataService`.
+
+### Improved
+
+Metadata Engine now supports:
+
+- SHA256 Checksum
+- Image Resolution
+
+### Testing
+
+- Full Regression Suite: **134/134 PASSED**
+
+### Status
+
+✅ Completed
+
+---
+
+# Legacy Releases (v0.x)
 
 ## v0.3.3 (2026-07-04)
 
 ### Added
 
 - Environment-aware configuration
-- DevelopmentConfig
-- TestingConfig
-- ProductionConfig
+- `DevelopmentConfig`
+- `TestingConfig`
+- `ProductionConfig`
 
 ### Changed
 
 - App Factory now loads configuration dynamically.
 - Storage configuration centralized.
-- Upload validator uses application config.
+- Upload validator now uses application configuration.
 
 ### Removed
 
@@ -75,9 +159,9 @@ Semua perubahan penting pada proyek ini akan didokumentasikan di sini.
 
 ### Added
 
-- Upload
-- Download
-- Delete
+- Secure upload
+- File download
+- File deletion
 
 ---
 
@@ -85,6 +169,6 @@ Semua perubahan penting pada proyek ini akan didokumentasikan di sini.
 
 ### Initial Release
 
+- Flask foundation
 - Authentication
-- Database
-- Flask Foundation
+- Database integration

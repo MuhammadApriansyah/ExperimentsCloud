@@ -1,23 +1,186 @@
+# Contributing to ExperimentsCloud
+
+## Purpose
+
+This document defines the development standards and workflow used throughout the ExperimentsCloud project.
+
+Even when developed by a single developer, these rules ensure consistency, maintainability, and long-term scalability.
+
+---
+
 # Development Workflow
 
-Implement
+Every feature follows the same lifecycle.
+
+Planning
 
 ↓
 
-Verify
+Implementation
 
 ↓
 
-Review
+Compile
 
 ↓
 
-Commit
+Unit Tests
 
 ↓
 
-Tag
+Integration Tests
 
 ↓
 
-ZIP Snapshot
+Regression Tests
+
+↓
+
+Documentation Update
+
+↓
+
+Gate Review
+
+↓
+
+Git Checkpoint
+
+↓
+
+Release Archive
+
+---
+
+# Coding Standards
+
+General principles
+
+- Follow PEP 8.
+- Keep functions focused on a single responsibility.
+- Prefer explicit code over implicit behavior.
+- Avoid duplicated logic.
+- Keep services independent from presentation.
+
+Naming
+
+Classes
+
+PascalCase
+
+Functions
+
+snake_case
+
+Constants
+
+UPPER_CASE
+
+---
+
+# Project Structure
+
+Business logic belongs inside the Service Layer.
+
+Database access belongs to Models.
+
+HTTP handling belongs to Routes.
+
+Validation belongs to Validators.
+
+Metadata extraction belongs to MetadataGenerator.
+
+---
+
+# Testing Policy
+
+Every new feature must include tests.
+
+Required:
+
+- Unit Tests
+- Service Tests (if applicable)
+- Integration Tests (when applicable)
+
+Regression testing is mandatory before every checkpoint.
+
+---
+
+# Documentation Policy
+
+Every completed sprint must synchronize:
+
+- README.md
+- ROADMAP.md
+- CHANGELOG.md
+- VERSION.md
+- ARCHITECTURE.md
+- CONTRIBUTING.md
+
+Documentation is part of the Definition of Done.
+
+---
+
+# Git Workflow
+
+Recommended sequence
+
+git status
+
+↓
+
+git add
+
+↓
+
+git commit
+
+↓
+
+git push
+
+↓
+
+ZIP Checkpoint
+
+---
+
+# Pull Request Checklist
+
+Before merging:
+
+- Code compiles
+- Tests pass
+- Regression passes
+- Documentation updated
+- Version verified
+
+---
+
+# Definition of Done
+
+A sprint is complete only if:
+
+- Feature implemented
+- Compile successful
+- Unit Tests passed
+- Integration Tests passed
+- Regression Tests passed
+- Documentation synchronized
+- Gate Review approved
+- Git Checkpoint created
+- Release Archive created
+
+---
+
+# Development Principles
+
+ExperimentsCloud follows these principles:
+
+- Modular Architecture
+- Service-Oriented Design
+- Single Responsibility Principle
+- Incremental Development
+- Regression First
+- Documentation First
+- Long-Term Maintainability

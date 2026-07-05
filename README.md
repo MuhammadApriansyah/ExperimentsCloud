@@ -1,116 +1,196 @@
 # ExperimentsCloud
 
-Personal Cloud Storage
+A lightweight, modular, self-hosted personal cloud storage platform built with Flask.
 
-## Features
+---
 
-Authentication
+# Project Status
 
-Upload
+**Current Version**
 
-Download
+v1.2.0-dev
 
-File Listing
+Status:
 
-## Stack
+Active Development
 
-Python
+Current Sprint:
 
-Flask
+Documentation & Project Hygiene
 
-SQLite
+---
 
-SQLAlchemy
+# Features
 
-Flask Login
+## Authentication
 
-Flask Migrate
+- User Login
+- User Logout
+- Password Hashing
+- Session Management
 
-## Structure
+## Storage
 
-app/
+- Secure Upload
+- Download
+- Delete
+- Rename
+- UUID-based Storage
 
-storage/
+## Folder Management
 
-database/
+- Create Folder
+- Rename Folder
+- Delete Folder
+- Nested Storage Structure
 
-migrations/
+## Metadata Engine
 
-docs/
+- SHA256 Checksum
+- Image Resolution
+- PDF Page Count
+- Audio Duration
 
-tests/
+Upcoming:
 
-# ExperimentsCloud
+- Video Metadata
+- Thumbnail Generation
+- Preview Generation
 
-ExperimentsCloud is a lightweight personal cloud storage application built with Flask.
+---
 
-## Features
+# Architecture Overview
 
-- User authentication
-- Secure file upload
-- File download
-- File deletion
-- UUID-based file storage
-- Centralized configuration
-- Centralized logging
-- Error handling
-- Environment-based configuration
+Current architecture follows a modular service-oriented design.
 
-## Tech Stack
+Core Components
 
-- Python
+- App Factory
+- SQLAlchemy Models
+- Service Layer
+- Storage Layer
+- Metadata Engine
+- Authentication
+- Validation Layer
+
+---
+
+# Tech Stack
+
+- Python 3.14
 - Flask
 - SQLAlchemy
 - Flask-Login
 - Flask-Migrate
 - SQLite
+- Pillow
+- pypdf
+- Mutagen
 
-## Project Structure
+---
 
+# Project Structure
+
+```
 app/
-config/
 database/
+docs/
 logs/
+migrations/
+scripts/
 storage/
 templates/
+tests/
+```
 
-## Current Version
+---
 
-v0.8.0
+# Metadata Engine
 
-## Status
+Currently supported metadata:
 
-Active Development
+- SHA256 Checksum
+- Image Width
+- Image Height
+- PDF Page Count
+- Audio Duration
 
-## Developer Commands
+Planned:
+
+- Video Resolution
+- Video Duration
+- Thumbnail Generation
+- Preview Generation
+
+---
+
+# Testing
+
+Current Regression Status
+
+```
+140 / 140 PASSED
+```
+
+Testing includes
+
+- Unit Tests
+- Integration Tests
+- Regression Tests
+
+---
+
+# Development Commands
 
 | Command | Description |
 |---------|-------------|
-| ./scripts/dev.sh clean | Remove cache and temporary files |
-| ./scripts/dev.sh check | Static verification |
+| ./scripts/dev.sh clean | Remove cache |
+| ./scripts/dev.sh check | Project verification |
 | ./scripts/dev.sh verify | Full verification |
-| ./scripts/dev.sh test | Run pytest |
+| ./scripts/dev.sh test | Run test suite |
 | ./scripts/dev.sh lint | Static analysis |
 
-## Latest Release
+---
 
-### v0.8.0 Stable
+# Roadmap
 
-- Modular service architecture
-- Unit & Integration Tests
-- CI scripts
-- Storage Service
-- Logging Service
-- File Service
+Completed
+
 - Authentication
-- Repository cleanup
+- Storage
+- Upload
+- Folder Management
+- Metadata Engine
+  - Checksum
+  - Image
+  - PDF
+  - Audio
 
-## Metadata Engine
+In Progress
 
-- [x] Checksum
-- [x] Image Metadata
-- [x] PDF Metadata
-- [x] Audio Metadata
-- [ ] Video Metadata
-- [ ] Thumbnail Engine
-- [ ] Preview Engine
+- Documentation & Project Hygiene
+
+Planned
+
+- Video Metadata
+- Thumbnail Engine
+- Preview Engine
+- Sharing
+- Search
+- Recycle Bin
+
+---
+
+# Version
+
+Current Version
+
+v1.2.0-dev
+
+Versioning follows milestone-based semantic versioning.
+
+---
+
+# License
+
+This project is currently developed as a personal learning and experimentation project.
