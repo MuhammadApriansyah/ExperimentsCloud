@@ -81,6 +81,7 @@ def test_delete(app):
         assert File.query.count() == 0
 
 
+@patch("app.files.services.FileMetadataService.create")
 @patch("app.files.services.StorageService.save")
 @patch("app.files.services.StorageService.file_path")
 @patch("app.files.services.generate_stored_name")
@@ -92,6 +93,7 @@ def test_upload(
     generate_name_mock,
     file_path_mock,
     save_mock,
+    metadata_create_mock,
     app,
 ):
 
@@ -124,6 +126,8 @@ def test_upload(
         generate_name_mock.assert_called_once_with("txt")
 
         save_mock.assert_called_once()
+
+        metadata_create_mock.assert_called_once_with(file)
 
         assert file.original_name == "document.txt"
 

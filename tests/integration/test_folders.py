@@ -2,6 +2,10 @@ from app.extensions import db
 
 from app.models import User
 
+from app.utils.date_utils import (
+    human_datetime,
+)
+
 
 def create_user():
 
@@ -555,4 +559,401 @@ def test_open_folder_shows_file_size(client):
     assert b"2 KB" in response.data
 
 
+from io import BytesIO
 
+
+def test_upload_file_to_folder(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        folder_id = folder.id
+
+    response = client.post(
+        f"/folders/{folder_id}/upload",
+        data={
+            "file": (
+                BytesIO(b"Hello World"),
+                "hello.txt",
+            ),
+        },
+        content_type="multipart/form-data",
+        follow_redirects=True,
+    )
+
+    assert response.status_code == 200
+
+    assert b"hello.txt" in response.data
+
+    with client.application.app_context():
+
+        file = File.query.filter_by(
+            original_name="hello.txt",
+        ).first()
+
+        assert file is not None
+
+        assert file.folder_id == folder_id
+
+
+def test_open_folder_shows_upload_form(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        folder_id = folder.id
+
+    response = client.get(
+        f"/folders/{folder_id}",
+        follow_redirects=True,
+    )
+
+    assert response.status_code == 200
+
+    assert b'<form' in response.data
+
+    assert (
+        f'/folders/{folder_id}/upload'.encode()
+        in response.data
+    )
+
+    assert (
+        b'type="file"'
+        in response.data
+    )
+
+    assert b"Upload" in response.data
+
+
+def test_open_folder_file_has_download_link(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        file = File(
+            owner=user,
+            folder=folder,
+            original_name="report.pdf",
+            stored_name="report.pdf",
+            file_extension="pdf",
+            mime_type="application/pdf",
+            file_size=100,
+        )
+
+        db.session.add(file)
+        db.session.commit()
+
+        response = client.get(
+            f"/folders/{folder.id}",
+            follow_redirects=True,
+        )
+
+    assert response.status_code == 200
+
+    expected = (
+        f'/files/download/{file.id}'
+        .encode()
+    )
+
+    assert expected in response.data
+
+
+def test_open_folder_file_has_rename_link(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        file = File(
+            owner=user,
+            folder=folder,
+            original_name="report.pdf",
+            stored_name="report.pdf",
+            file_extension="pdf",
+            mime_type="application/pdf",
+            file_size=100,
+        )
+
+        db.session.add(file)
+        db.session.commit()
+
+        response = client.get(
+            f"/folders/{folder.id}",
+            follow_redirects=True,
+        )
+
+    assert response.status_code == 200
+
+    expected = (
+        f"/files/rename/{file.id}"
+        .encode()
+    )
+
+    assert expected in response.data
+
+
+def test_open_folder_file_has_delete_form(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        file = File(
+            owner=user,
+            folder=folder,
+            original_name="report.pdf",
+            stored_name="report.pdf",
+            file_extension="pdf",
+            mime_type="application/pdf",
+            file_size=100,
+        )
+
+        db.session.add(file)
+        db.session.commit()
+
+        response = client.get(
+            f"/folders/{folder.id}",
+            follow_redirects=True,
+        )
+
+    assert response.status_code == 200
+
+    expected = (
+        f"/files/delete/{file.id}"
+        .encode()
+    )
+
+    assert expected in response.data
+
+
+def test_open_folder_shows_file_actions(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        file = File(
+            owner=user,
+            folder=folder,
+            original_name="report.pdf",
+            stored_name="report.pdf",
+            file_extension="pdf",
+            mime_type="application/pdf",
+            file_size=100,
+        )
+
+        db.session.add(file)
+        db.session.commit()
+
+        response = client.get(
+            f"/folders/{folder.id}",
+            follow_redirects=True,
+        )
+
+    assert response.status_code == 200
+
+    assert b"Download" in response.data
+
+    assert b"Rename" in response.data
+
+    assert b"Delete" in response.data
+
+
+def test_open_folder_shows_file_icon(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        file = File(
+            owner=user,
+            folder=folder,
+            original_name="report.pdf",
+            stored_name="report.pdf",
+            file_extension="pdf",
+            mime_type="application/pdf",
+            file_size=100,
+        )
+
+        db.session.add(file)
+        db.session.commit()
+
+        response = client.get(
+            f"/folders/{folder.id}",
+            follow_redirects=True,
+        )
+
+    assert response.status_code == 200
+
+    assert "📄".encode("utf-8") in response.data
+
+
+def test_open_folder_shows_file_type(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        file = File(
+            owner=user,
+            folder=folder,
+            original_name="report.pdf",
+            stored_name="report.pdf",
+            file_extension="pdf",
+            mime_type="application/pdf",
+            file_size=100,
+        )
+
+        db.session.add(file)
+        db.session.commit()
+
+        response = client.get(
+            f"/folders/{folder.id}",
+            follow_redirects=True,
+        )
+
+    assert response.status_code == 200
+
+    assert b"PDF Document" in response.data
+
+
+def test_open_folder_shows_file_created_time(client):
+
+    login(client)
+
+    with client.application.app_context():
+
+        user = User.query.filter_by(
+            email="michi@example.com",
+        ).first()
+
+        folder = Folder(
+            name="Documents",
+            owner=user,
+        )
+
+        db.session.add(folder)
+        db.session.commit()
+
+        file = File(
+            owner=user,
+            folder=folder,
+            original_name="report.pdf",
+            stored_name="report.pdf",
+            file_extension="pdf",
+            mime_type="application/pdf",
+            file_size=100,
+        )
+
+        db.session.add(file)
+        db.session.commit()
+
+        response = client.get(
+            f"/folders/{folder.id}",
+            follow_redirects=True,
+        )
+
+    assert response.status_code == 200
+
+    assert human_datetime(
+        file.created_at
+    ).encode() in response.data

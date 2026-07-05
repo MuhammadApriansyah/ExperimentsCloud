@@ -3,6 +3,7 @@ from flask import (
     redirect,
     url_for,
     flash,
+    request
 )
 
 from flask_login import (
@@ -167,4 +168,33 @@ def delete(folder_id):
 
     return redirect(
         url_for("folders.index")
+    )
+
+
+@folders.route(
+    "/<int:folder_id>/upload",
+    methods=["POST"],
+)
+@login_required
+def upload(folder_id):
+
+    folder = get_owned_folder_or_404(
+        folder_id,
+        current_user.id,
+    )
+
+    uploaded_file = request.files.get("file")
+
+    if uploaded_file:
+        FileService.upload(
+            uploaded_file,
+            current_user,
+            folder,
+        )
+
+    return redirect(
+        url_for(
+            "folders.open",
+            folder_id=folder.id,
+        )
     )

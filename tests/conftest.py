@@ -16,6 +16,8 @@ def app():
 @pytest.fixture(autouse=True)
 def database(app):
 
+    print("\nDatabase URI:", app.config["SQLALCHEMY_DATABASE_URI"])
+
     with app.app_context():
 
         db.drop_all()

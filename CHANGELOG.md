@@ -2,6 +2,25 @@
 
 Semua perubahan penting pada proyek ini akan didokumentasikan di sini.
 
+## [v1.2.0-dev] - Sprint 1.8
+
+### Added
+- Audio metadata extraction using Mutagen.
+- MetadataGenerator.audio_duration().
+- Audio duration integration into FileMetadataService.
+- Unit tests for audio metadata.
+- Service tests for audio metadata.
+
+### Improved
+- Metadata pipeline now supports:
+  - Checksum
+  - Image metadata
+  - PDF metadata
+  - Audio duration
+
+### Testing
+- 140/140 tests passed.
+
 ---
 
 ## v0.3.3 (2026-07-04)

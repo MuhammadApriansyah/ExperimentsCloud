@@ -22,6 +22,33 @@
 
 {% endif %}
 
+{% if current_folder %}
+
+<h3>Upload File</h3>
+
+<form
+    method="POST"
+    action="{{ url_for(
+        'folders.upload',
+        folder_id=current_folder.id
+    ) }}"
+    enctype="multipart/form-data"
+>
+
+    <input
+        type="file"
+        name="file"
+        required
+    >
+
+    <button type="submit">
+        Upload
+    </button>
+
+</form>
+
+{% endif %}
+
 <p>
     <a href="{{ url_for('folders.create') }}">
         Create Folder
@@ -72,9 +99,55 @@
 
 <li>
 
-    {{ file.original_name }}
+    {{ get_file_icon(file.file_extension) }}
 
-    {{ format_file_size(file.file_size) }}
+    <strong>{{ file.original_name }}</strong>
+
+    <br>
+
+    <small>
+        {{ get_file_type(file.file_extension) }}
+    </small>
+
+    <br>
+
+    <small>
+
+        {{ file.created_at | human_datetime }}
+
+    </small>
+
+    <br>
+
+    <small>
+        {{ format_file_size(file.file_size) }}
+    </small>
+
+    <br>
+
+    <a href="{{ url_for('files.download', file_id=file.id) }}">
+        Download
+    </a>
+
+    |
+
+    <a href="{{ url_for('files.rename', file_id=file.id) }}">
+        Rename
+    </a>
+
+    |
+
+    <form
+        method="POST"
+        action="{{ url_for('files.delete', file_id=file.id) }}"
+        style="display:inline"
+    >
+
+        <button type="submit">
+            Delete
+        </button>
+
+    </form>
 
 </li>
 

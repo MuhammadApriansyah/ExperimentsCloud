@@ -18,6 +18,8 @@ from app.folders.routes import folders
 
 from app.helpers import (
     format_file_size,
+    get_file_icon,
+    get_file_type,
 )
 
 def create_app():
@@ -26,6 +28,8 @@ def create_app():
 
     app.jinja_env.globals.update(
         format_file_size=format_file_size,
+        get_file_icon=get_file_icon,
+        get_file_type=get_file_type,
     )
 
     app.config.from_object(

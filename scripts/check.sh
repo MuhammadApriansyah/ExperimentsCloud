@@ -1,17 +1,25 @@
-#!/usr/bin/env bash
+#!/data/data/com.termux/files/usr/bin/bash
 
-set -e
+source "$(dirname "$0")/lib/common.sh"
 
-echo "Compile..."
+action "Project Validation"
+
+info "Compiling project..."
 
 python -m compileall app
 
-echo "Import..."
+check "Compilation successful"
+
+info "Importing application..."
 
 python -c "import app"
 
-echo "Routes..."
+check "Import successful"
+
+info "Checking routes..."
 
 flask --app run.py routes
 
-echo "Done."
+check "Routes loaded"
+
+footer "Project validation completed."

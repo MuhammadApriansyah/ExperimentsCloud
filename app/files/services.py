@@ -15,10 +15,19 @@ from app.services.storage_service import (
 )
 from app.services.logging_service import logger
 
+from app.services.file_metadata_service import (
+    FileMetadataService,
+)
+
+
 class FileService:
 
     @staticmethod
-    def upload(uploaded_file, user):
+    def upload(
+        uploaded_file,
+        user,
+        folder=None,
+    ):
 
         FileValidator.validate_extension(
             uploaded_file.filename
@@ -53,6 +62,7 @@ class FileService:
 
         file = File(
             owner=user,
+            folder=folder,
             original_name=uploaded_file.filename,
             stored_name=stored_name,
             file_extension=extension,
@@ -61,6 +71,8 @@ class FileService:
         )
 
         db.session.add(file)
+        db.session.flush()
+        FileMetadataService.create(file)
         db.session.commit()
 
         return file

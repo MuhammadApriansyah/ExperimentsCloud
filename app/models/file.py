@@ -18,6 +18,12 @@ class File(db.Model):
         nullable=False
     )
 
+    folder_id = db.Column(
+        db.Integer,
+        db.ForeignKey("folders.id"),
+        nullable=True,
+    )
+
     original_name = db.Column(
         db.String(255),
         nullable=False
@@ -59,15 +65,14 @@ class File(db.Model):
         back_populates="files",
     )
 
+    file_metadata = db.relationship(
+        "FileMetadata",
+        back_populates="file",
+        uselist=False,
+        cascade="all, delete-orphan",
+    )
+
     def __repr__(self):
         return (
             f"<File {self.original_name}>"
-        )
-
-    folder_id = db.Column(
-        db.Integer,
-        db.ForeignKey("folders.id"),
-        nullable=True,
-     )
-
-
+    )
