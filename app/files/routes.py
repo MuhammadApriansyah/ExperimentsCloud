@@ -85,25 +85,19 @@ def download(file_id):
 
     storage = get_storage()
 
-    path = storage.file_path(
+    key = storage.file_path(
         current_user.id,
         file.stored_name,
     )
 
-    print(path)
-    print(storage.exists(path))
-
-    if not storage.exists(path):
+    if not storage.exists(key):
         abort(404)
 
-    logger.info(
-        "DOWNLOAD | user=%s | file=%s",
-        current_user.id,
-        file.original_name,
-    )
+    stream = storage.open(key)
 
     return send_file(
-        path,
+        stream,
+        mimetype=file.mime_type,
         as_attachment=True,
         download_name=file.original_name,
     )
