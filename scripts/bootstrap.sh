@@ -29,9 +29,15 @@ source venv/bin/activate
 
 print_section "Dependencies"
 
-pip install --upgrade pip
+python -m pip install \
+    --disable-pip-version-check \
+    --quiet \
+    --upgrade pip
 
-pip install -r requirements.txt
+python -m pip install \
+    --disable-pip-version-check \
+    --quiet \
+    -r requirements.txt
 
 pass "requirements installed"
 
