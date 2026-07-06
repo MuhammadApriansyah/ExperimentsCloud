@@ -1,136 +1,79 @@
 # Changelog
 
-Semua perubahan penting pada proyek **ExperimentsCloud** didokumentasikan dalam berkas ini.
-
-Proyek ini mengikuti **milestone-based semantic versioning**.
-
-- **v0.x** → Foundation & Initial Development
-- **v1.x** → Structured Sprint Development
+All notable changes to this project will be documented here.
 
 ---
 
-# Development Releases
+## [v1.2.0-dev] — Sprint 1.9
 
-## [v1.2.0-dev] - Sprint 1.8
-### Objective
-Audio Metadata Foundation
+Release Date:
+2026-07-06
 
 ### Added
 
-- Audio metadata extraction using **Mutagen**.
-- `MetadataGenerator.audio_duration()`.
-- Audio duration integration into `FileMetadataService`.
-- Unit tests for audio metadata.
-- Service tests for audio metadata.
+- VideoMetadataService
+- FFprobe integration
+- Video metadata parser
+- Video metadata integration into FileMetadataService
+- Video metadata unit tests
+- FileMetadataService integration tests
+
+### Metadata Engine
+
+Added support for:
+
+- SHA-256 Checksum
+- Image Metadata
+- PDF Metadata
+- Audio Metadata
+- Video Metadata
 
 ### Improved
 
-Metadata Engine now supports:
-
-- SHA256 Checksum
-- Image Resolution
-- PDF Page Count
-- Audio Duration
+- Cleaner metadata architecture
+- Dedicated VideoMetadataService
+- Normalized metadata parsing
+- Better separation of internal generators and external adapters
 
 ### Testing
 
-- MetadataGenerator tests: **10/10 PASSED**
-- FileMetadataService tests: **5/5 PASSED**
-- Full Regression Suite: **140/140 PASSED**
-
-### Status
-
-✅ Completed
+- 142 / 142 tests passed
+- Full regression passed
 
 ---
 
-## [v1.1.0-dev] - Sprint 1.7
-
-### Objective
-
-PDF Metadata Foundation
+## [v1.2.0-dev] — Sprint 1.8
 
 ### Added
 
-- PDF page count extraction using **pypdf**.
-- `MetadataGenerator.pdf_page_count()`.
-- PDF metadata integration into `FileMetadataService`.
-- Unit tests for PDF metadata.
-- Service tests for PDF metadata.
+- Audio metadata extraction using Mutagen
+- Audio duration support
+- Audio metadata tests
 
 ### Improved
 
-Metadata Engine now supports:
-
-- SHA256 Checksum
-- Image Resolution
-- PDF Page Count
-
-### Testing
-
-- Full Regression Suite: **137/137 PASSED**
-
-### Status
-
-✅ Completed
-
----
-
-## [v1.0.0-dev] - Sprint 1.6
-
-### Objective
-
-Image Metadata Foundation
-
-### Added
-
-- Image dimension extraction using **Pillow**.
-- `MetadataGenerator.image_size()`.
-- Image metadata integration into `FileMetadataService`.
-
-### Improved
-
-Metadata Engine now supports:
-
-- SHA256 Checksum
-- Image Resolution
+- Metadata pipeline supports:
+  - Checksum
+  - Image
+  - PDF
+  - Audio
 
 ### Testing
 
-- Full Regression Suite: **134/134 PASSED**
-
-### Status
-
-✅ Completed
+- 140 / 140 tests passed
 
 ---
 
-# Legacy Releases (v0.x)
-
-## v0.3.3 (2026-07-04)
-
-### Added
+## v0.3.3
 
 - Environment-aware configuration
-- `DevelopmentConfig`
-- `TestingConfig`
-- `ProductionConfig`
-
-### Changed
-
-- App Factory now loads configuration dynamically.
-- Storage configuration centralized.
-- Upload validator now uses application configuration.
-
-### Removed
-
-- Legacy storage constants.
+- DevelopmentConfig
+- TestingConfig
+- ProductionConfig
 
 ---
 
 ## v0.3.2
-
-### Added
 
 - Centralized logging
 - Error logging
@@ -140,15 +83,11 @@ Metadata Engine now supports:
 
 ## v0.3.1
 
-### Added
-
 - Logging infrastructure
 
 ---
 
 ## v0.3
-
-### Added
 
 - Modular architecture
 - Service layer
@@ -157,18 +96,15 @@ Metadata Engine now supports:
 
 ## v0.2
 
-### Added
-
-- Secure upload
-- File download
-- File deletion
+- Upload
+- Download
+- Delete
 
 ---
 
 ## v0.1
 
-### Initial Release
-
-- Flask foundation
+- Initial release
 - Authentication
-- Database integration
+- Database
+- Flask foundation

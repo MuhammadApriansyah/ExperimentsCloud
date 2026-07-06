@@ -8,6 +8,8 @@ from pypdf import PdfWriter
 
 from unittest.mock import patch
 
+import subprocess
+
 
 def create_user():
 
@@ -45,6 +47,50 @@ def create_file(app, user):
         stored_name=stored_name,
         file_extension="txt",
         mime_type="text/plain",
+        file_size=path.stat().st_size,
+    )
+
+    db.session.add(file)
+    db.session.commit()
+
+    return file
+
+def create_video_file(app, user):
+
+    stored_name = "video.mp4"
+
+    path = StorageService.file_path(
+        user.id,
+        stored_name,
+    )
+
+    StorageService.ensure_directory(
+        path.parent,
+    )
+
+    subprocess.run(
+        [
+            "ffmpeg",
+            "-y",
+            "-f",
+            "lavfi",
+            "-i",
+            "color=c=black:s=320x240:d=1",
+            "-c:v",
+            "libx264",
+            str(path),
+        ],
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+    file = File(
+        owner=user,
+        original_name="video.mp4",
+        stored_name=stored_name,
+        file_extension="mp4",
+        mime_type="video/mp4",
         file_size=path.stat().st_size,
     )
 
@@ -244,3 +290,31 @@ def test_create_audio_metadata(
         assert metadata.checksum is not None
 
         audio_duration_mock.assert_called_once()
+
+
+def test_create_video_metadata(app):
+
+    with app.app_context():
+
+        user = create_user()
+
+        file = create_video_file(
+            app,
+            user,
+        )
+
+        metadata = FileMetadataService.create(
+            file,
+        )
+
+        db.session.commit()
+
+        assert metadata.file_id == file.id
+
+        assert metadata.checksum is not None
+
+        assert metadata.duration is not None
+
+        assert metadata.image_width == 320
+
+        assert metadata.image_height == 240

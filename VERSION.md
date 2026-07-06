@@ -1,174 +1,45 @@
-# ExperimentsCloud Versioning
-
-## Versioning Strategy
-
-ExperimentsCloud uses **Milestone-Based Semantic Versioning**.
-
-Version format:
-
-MAJOR.MINOR.PATCH[-STAGE]
-
-Example:
-
-v1.2.0-dev
-
----
-
-## Current Version
+# ExperimentsCloud Version
 
 Current Version
 
 v1.2.0-dev
 
-Current Milestone
+Checkpoint
 
-Metadata Engine
+Sprint 1.9
 
-Current Sprint
+Status
 
-Documentation & Project Hygiene
+Stable Development Checkpoint
 
----
+Release Date
 
-## Version Format
+2026-07-06
 
-MAJOR
+Regression Status
 
-Breaking architectural changes.
-
-MINOR
-
-New milestone or major feature.
-
-PATCH
-
-Bug fixes, improvements, documentation, refactoring.
-
-STAGE
-
-Development stage.
-
-Possible values:
-
-- dev
-- rc
-- stable
-
-Examples
-
-v1.2.0-dev
-
-Development milestone.
-
-v1.2.0-rc
-
-Release Candidate.
-
-v1.2.0
-
-Stable Release.
-
----
-
-## Development Lifecycle
-
-Planning
-
-↓
-
-Sprint
-
-↓
-
-Implementation
-
-↓
+PASS
 
 Testing
 
-↓
+142 / 142 Passed
 
-Regression
+Major Features
 
-↓
+- Authentication
+- File Management
+- Folder Management
+- Metadata Engine
+  - SHA256
+  - Image
+  - PDF
+  - Audio
+  - Video
 
-Documentation
+Architecture
 
-↓
+Service-Oriented Architecture
 
-Git Checkpoint
+Ready For
 
-↓
-
-Release Archive
-
-↓
-
-Next Sprint
-
----
-
-## Release Types
-
-Development
-
-Internal development checkpoint.
-
-Release Candidate
-
-Feature complete.
-
-Stable
-
-Production-ready milestone.
-
----
-
-## Version History
-
-v0.x
-
-Initial development.
-
-v1.x
-
-Structured sprint-based development.
-
----
-
-## Upgrade Rules
-
-MAJOR
-
-Architecture changes.
-
-MINOR
-
-New subsystem completed.
-
-PATCH
-
-Bug fixes
-
-Refactoring
-
-Documentation
-
-Tests
-
----
-
-## Release Checklist
-
-Before every checkpoint:
-
-- README updated
-- ROADMAP updated
-- CHANGELOG updated
-- ARCHITECTURE updated
-- CONTRIBUTING updated
-- VERSION updated
-- Regression tests passed
-- Git commit created
-- Git push completed
-- ZIP archive created
+Sprint 2.0

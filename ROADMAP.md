@@ -1,30 +1,64 @@
-ExperimentsCloud Roadmap
+# ExperimentsCloud Roadmap
 
-1. Vision
+---
 
-2. Current Version
+# Metadata Engine
 
-3. Completed Milestones
-   ✓ Foundation
-   ✓ Authentication
-   ✓ Storage
-   ✓ Folder Management
-   ✓ Metadata Engine
+- [x] SHA-256 Checksum
+- [x] Image Metadata
+- [x] PDF Metadata
+- [x] Audio Metadata
+- [x] Video Metadata
 
-4. Current Sprint
+---
 
-5. Upcoming Milestones
-   • Video Metadata
-   • Thumbnail Engine
-   • Preview Engine
+# Media Processing
 
-6. Future Roadmap
-   • Sharing
-   • Search
-   • Recycle Bin
-   • API
-   • Admin Panel
-   • Encryption
-   • Synchronization
+- [ ] Thumbnail Engine
+- [ ] Preview Engine
+- [ ] Video Thumbnail Generator
+- [ ] Image Optimization
+- [ ] Video Transcoding
 
-7. Long-term Vision
+---
+
+# Search
+
+- [ ] Metadata Search
+- [ ] Filename Search
+- [ ] Folder Search
+- [ ] Full Text Search
+
+---
+
+# Sharing
+
+- [ ] Public Link
+- [ ] Expiring Link
+- [ ] Password Protected Link
+
+---
+
+# Security
+
+- [ ] Virus Scanner
+- [ ] File Integrity Verification
+- [ ] Audit Log
+
+---
+
+# Infrastructure
+
+- [ ] Background Job Queue
+- [ ] Redis Cache
+- [ ] Object Storage Support
+- [ ] Docker Deployment
+- [ ] AlmaLinux Deployment
+
+---
+
+# Administration
+
+- [ ] Admin Dashboard
+- [ ] Storage Statistics
+- [ ] User Management

@@ -1,22 +1,20 @@
 # ExperimentsCloud
 
-A lightweight, modular, self-hosted personal cloud storage platform built with Flask.
+ExperimentsCloud is a lightweight, modular, self-hosted personal cloud storage platform built with Flask.
+
+The project focuses on clean architecture, maintainability, automated testing, and progressive feature development.
 
 ---
 
-# Project Status
-
-**Current Version**
+# Current Version
 
 v1.2.0-dev
 
 Status:
-
 Active Development
 
-Current Sprint:
-
-Documentation & Project Hygiene
+Latest Stable Checkpoint:
+Sprint 1.9
 
 ---
 
@@ -29,49 +27,45 @@ Documentation & Project Hygiene
 - Password Hashing
 - Session Management
 
-## Storage
+## File Management
 
-- Secure Upload
+- Upload
 - Download
 - Delete
-- Rename
-- UUID-based Storage
-
-## Folder Management
-
-- Create Folder
-- Rename Folder
-- Delete Folder
-- Nested Storage Structure
+- Folder Management
 
 ## Metadata Engine
 
-- SHA256 Checksum
-- Image Resolution
+Supported metadata extraction:
+
+- SHA-256 Checksum
+- Image Width & Height
 - PDF Page Count
 - Audio Duration
+- Video
+  - Duration
+  - Resolution
+  - FPS
+  - Codec
+  - Bitrate
 
-Upcoming:
+## Storage
 
-- Video Metadata
-- Thumbnail Generation
-- Preview Generation
+- UUID-based Storage
+- Organized User Directories
+- Storage Service Layer
 
----
+## Configuration
 
-# Architecture Overview
+- Development
+- Testing
+- Production
 
-Current architecture follows a modular service-oriented design.
+## Logging
 
-Core Components
-
-- App Factory
-- SQLAlchemy Models
-- Service Layer
-- Storage Layer
-- Metadata Engine
-- Authentication
-- Validation Layer
+- Centralized Logging
+- Error Logging
+- Custom Error Handlers
 
 ---
 
@@ -82,10 +76,10 @@ Core Components
 - SQLAlchemy
 - Flask-Login
 - Flask-Migrate
-- SQLite
 - Pillow
-- pypdf
+- PyPDF
 - Mutagen
+- FFprobe (FFmpeg)
 
 ---
 
@@ -93,6 +87,7 @@ Core Components
 
 ```
 app/
+config/
 database/
 docs/
 logs/
@@ -105,92 +100,87 @@ tests/
 
 ---
 
-# Metadata Engine
+# Architecture
 
-Currently supported metadata:
-
-- SHA256 Checksum
-- Image Width
-- Image Height
-- PDF Page Count
-- Audio Duration
-
-Planned:
-
-- Video Resolution
-- Video Duration
-- Thumbnail Generation
-- Preview Generation
+```
+Upload
+    │
+    ▼
+StorageService
+    │
+    ▼
+FileMetadataService
+    │
+    ├── MetadataGenerator
+    │      ├── SHA256
+    │      ├── Image
+    │      ├── PDF
+    │      └── Audio
+    │
+    └── VideoMetadataService
+            └── FFprobe
+    │
+    ▼
+Database
+```
 
 ---
 
 # Testing
 
-Current Regression Status
+Current Test Suite
 
 ```
-140 / 140 PASSED
+142 Tests
+
+142 Passed
+
+0 Failed
+
+0 Skipped
 ```
 
-Testing includes
+Regression Status
 
-- Unit Tests
-- Integration Tests
-- Regression Tests
+PASS
 
 ---
 
-# Development Commands
+# Developer Commands
 
 | Command | Description |
-|---------|-------------|
-| ./scripts/dev.sh clean | Remove cache |
+|----------|-------------|
+| ./scripts/dev.sh clean | Clean cache |
 | ./scripts/dev.sh check | Project verification |
 | ./scripts/dev.sh verify | Full verification |
-| ./scripts/dev.sh test | Run test suite |
+| ./scripts/dev.sh test | Run pytest |
 | ./scripts/dev.sh lint | Static analysis |
 
 ---
 
-# Roadmap
+# Roadmap Highlights
 
 Completed
 
 - Authentication
-- Storage
-- Upload
+- File Storage
 - Folder Management
 - Metadata Engine
-  - Checksum
   - Image
   - PDF
   - Audio
+  - Video
 
-In Progress
+Next
 
-- Documentation & Project Hygiene
-
-Planned
-
-- Video Metadata
 - Thumbnail Engine
 - Preview Engine
-- Sharing
-- Search
-- Recycle Bin
-
----
-
-# Version
-
-Current Version
-
-v1.2.0-dev
-
-Versioning follows milestone-based semantic versioning.
+- Video Thumbnail Generation
+- Search Engine
+- Sharing System
 
 ---
 
 # License
 
-This project is currently developed as a personal learning and experimentation project.
+Private Project

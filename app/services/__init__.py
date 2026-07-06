@@ -3,6 +3,8 @@ from .storage_service import StorageService
 from .folder_service import FolderService
 from .file_metadata_service import FileMetadataService
 from .metadata_generator import MetadataGenerator
+from .video_metadata_service import VideoMetadataService
+
 
 __all__ = [
     "logger",
@@ -10,4 +12,5 @@ __all__ = [
     "FolderService",
     "FileMetadataService",
     "MetadataGenerator",
+    "VideoMetadataService",
 ]

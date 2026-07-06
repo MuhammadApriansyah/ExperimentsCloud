@@ -3,6 +3,7 @@ from app.models.file_metadata import FileMetadata
 
 from app.services.storage_service import StorageService
 from app.services.metadata_generator import MetadataGenerator
+from app.services.video_metadata_service import VideoMetadataService
 
 
 class FileMetadataService:
@@ -42,6 +43,14 @@ class FileMetadataService:
                     path
                 )
             )
+
+        if file.mime_type.startswith("video/"):
+
+            video = VideoMetadataService.extract(path)
+
+            metadata.duration = video.get("duration")
+            metadata.image_width = video.get("width")
+            metadata.image_height = video.get("height")
 
         db.session.add(metadata)
 
