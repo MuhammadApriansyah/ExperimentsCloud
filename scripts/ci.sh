@@ -1,24 +1,27 @@
 #!/usr/bin/env bash
 
-set -e
+set -Eeuo pipefail
 
-trap 'echo; echo "CI failed."; exit 1' ERR
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+echo
 echo "========================================"
-echo "ExperimentsCloud CI"
+echo "      ExperimentsCloud CI Pipeline"
 echo "========================================"
+echo
+
+echo "[1/3] Bootstrap"
+"$SCRIPT_DIR/bootstrap.sh"
 
 echo
-echo "[1/3] Static checks..."
-bash scripts/check.sh
+echo "[2/3] Verification"
+"$SCRIPT_DIR/verify.sh"
 
 echo
-echo "[2/3] Running tests..."
-bash scripts/test.sh
+echo "[3/3] Final Doctor"
+"$SCRIPT_DIR/doctor.sh"
 
 echo
-echo "[3/3] Cleanup..."
-bash scripts/cleanup.sh
-
-echo
-echo "CI completed successfully."
+echo "========================================"
+echo "                CI PASSED"
+echo "========================================"
