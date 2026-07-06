@@ -1,5 +1,49 @@
 # ExperimentsCloud Architecture
 
+# Binary Discovery Framework
+
+ExperimentsCloud tidak menggunakan hardcoded executable path.
+
+Semua executable dicari melalui Binary Discovery Framework.
+
+Priority:
+
+1. Flask Config
+
+2. Environment Variable
+
+3. PATH
+
+4. BinaryNotFoundError
+
+Framework ini memastikan project dapat berjalan pada:
+
+- AlmaLinux
+- Termux
+- Ubuntu
+- Debian
+- Fedora
+- Docker
+- CI/CD
+
+tanpa perubahan source code.
+
+# External Dependencies
+
+Core binaries
+
+- ffprobe
+- ffmpeg
+
+Future
+
+- ImageMagick
+- LibreOffice
+- Tesseract
+- ExifTool
+- Ghostscript
+- Pandoc
+
 ## Core Philosophy
 
 - Modular

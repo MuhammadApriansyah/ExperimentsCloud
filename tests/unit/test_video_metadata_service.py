@@ -5,12 +5,19 @@ from app.services.video_metadata_service import (
     VideoMetadataService,
 )
 
+from app.system.binaries import find_binary
+
 
 def create_video(path):
 
+    ffmpeg = find_binary(
+        "FFMPEG_BINARY",
+        "ffmpeg",
+    )
+
     subprocess.run(
         [
-            "ffmpeg",
+            ffmpeg,
             "-y",
             "-f",
             "lavfi",

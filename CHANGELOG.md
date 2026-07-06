@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented here.
 
+# Sprint 2.0
+
+## Added
+
+- Binary Discovery Framework
+- Auto-discovery external binaries
+- Configurable binary path support
+- System dependency verification script
+- SYSTEM_DEPENDENCIES documentation
+
+## Changed
+
+- Primary development environment migrated to AlmaLinux 10.2
+- Git workflow migrated to SSH
+- Video metadata now uses configurable ffprobe discovery
+- Video test generation now uses configurable ffmpeg discovery
+
+## Fixed
+
+- Testing configuration override
+- Binary lookup portability
+- Cross-platform FFmpeg detection
+
+## Verification
+
+- Full regression passed (142/142)
+- FFmpeg verified
+- FFprobe verified
+
 ---
 
 ## [v1.2.0-dev] — Sprint 1.9

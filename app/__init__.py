@@ -22,18 +22,19 @@ from app.helpers import (
     get_file_type,
 )
 
-def create_app():
+def create_app(config_object=None):
 
     app = Flask(__name__)
+
+    if config_object is None:
+        app.config.from_object(get_config())
+    else:
+        app.config.from_object(config_object)
 
     app.jinja_env.globals.update(
         format_file_size=format_file_size,
         get_file_icon=get_file_icon,
         get_file_type=get_file_type,
-    )
-
-    app.config.from_object(
-        get_config()
     )
 
     db.init_app(app)

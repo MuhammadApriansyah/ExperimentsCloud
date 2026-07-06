@@ -18,6 +18,10 @@ class BaseConfig:
         f"sqlite:///{DATABASE_PATH}"
     )
 
+    FFMPEG_BINARY = None
+
+    FFPROBE_BINARY = None
+
     STORAGE_ROOT = BASE_DIR / "storage"
 
     USER_STORAGE = STORAGE_ROOT / "users"

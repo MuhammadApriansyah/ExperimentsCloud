@@ -2,6 +2,8 @@ import json
 import subprocess
 from pathlib import Path
 
+from app.system.binaries import find_binary
+
 
 class VideoMetadataService:
 
@@ -10,9 +12,14 @@ class VideoMetadataService:
 
         path = Path(path)
 
+        ffprobe = find_binary(
+            "FFPROBE_BINARY",
+            "ffprobe",
+        )
+
         result = subprocess.run(
             [
-                "ffprobe",
+                ffprobe,
                 "-v", "quiet",
                 "-print_format", "json",
                 "-show_format",

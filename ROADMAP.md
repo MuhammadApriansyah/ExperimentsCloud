@@ -1,5 +1,49 @@
 # ExperimentsCloud Roadmap
 
+# Roadmap
+
+## Completed
+
+- Sprint 1.x
+    - Authentication
+    - File Management
+    - Folder Management
+    - Metadata Engine
+
+- Sprint 2.0
+    - AlmaLinux Migration
+    - Binary Discovery Framework
+    - External Dependency Policy
+
+---
+
+## Next
+
+Sprint 2.1
+
+Developer Infrastructure
+
+- Health Check
+- Doctor CLI
+- Dependency Manager
+- Configuration Center
+
+Sprint 2.2
+
+Storage Optimization
+
+Sprint 2.3
+
+Thumbnail Engine
+
+Sprint 2.4
+
+Preview Engine
+
+Sprint 2.5
+
+Search Engine
+
 ---
 
 # Metadata Engine

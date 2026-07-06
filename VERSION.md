@@ -1,4 +1,59 @@
-# ExperimentsCloud Version
+# Version
+
+Current Version
+
+v2.0.0-dev
+
+---
+
+Status
+
+Development
+
+---
+
+Environment
+
+Primary
+
+- AlmaLinux 10.2
+
+Compatibility
+
+- Termux
+
+---
+
+Regression
+
+142 / 142 PASS
+
+---
+
+Python
+
+3.12
+
+---
+
+Database
+
+SQLite
+
+---
+
+External Dependencies
+
+- FFmpeg
+- FFprobe
+
+---
+
+Repository
+
+SSH Enabled
+
+---
 
 Current Version
 

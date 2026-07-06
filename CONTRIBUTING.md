@@ -8,6 +8,52 @@ Even when developed by a single developer, these rules ensure consistency, maint
 
 ---
 
+# Development Environment
+
+Primary environment
+
+- AlmaLinux 10.2
+
+Supported
+
+- Termux
+
+---
+
+## Before Commit
+
+Always execute
+
+```bash
+./scripts/check_system.sh
+```
+
+```bash
+pytest -v
+```
+
+Both commands must pass before creating a commit.
+
+---
+
+## Sprint Workflow
+
+Every sprint follows:
+
+1. Development
+2. Compile Check
+3. Unit Test
+4. Integration Test
+5. Full Regression
+6. Documentation Update
+7. Git Audit
+8. Commit
+9. Push
+10. Remote Verification
+11. Start Next Sprint
+
+Skipping checkpoint is discouraged.
+
 # Development Workflow
 
 Every feature follows the same lifecycle.

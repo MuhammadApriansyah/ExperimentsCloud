@@ -1,10 +1,66 @@
 # ExperimentsCloud
 
-ExperimentsCloud is a lightweight, modular, self-hosted personal cloud storage platform built with Flask.
+ExperimentsCloud adalah personal cloud server yang dibangun menggunakan Flask dengan fokus pada:
 
-The project focuses on clean architecture, maintainability, automated testing, and progressive feature development.
+- File Management
+- Folder Management
+- Metadata Extraction
+- Storage Management
+- Modular Service Architecture
 
 ---
+
+## Primary Development Environment
+
+Mulai Sprint 2.0, environment utama pengembangan adalah:
+
+- AlmaLinux 10.2
+- Python 3.12
+- Git (SSH)
+- SQLite
+- FFmpeg
+- FFprobe
+
+Termux tetap didukung sebagai compatibility environment.
+
+---
+
+## External Dependencies
+
+ExperimentsCloud menggunakan Binary Discovery Framework.
+
+Dependency eksternal:
+
+- ffprobe
+- ffmpeg
+
+Binary akan dicari dengan urutan:
+
+1. Flask Config
+2. Environment Variable
+3. System PATH
+
+---
+
+## Verify Environment
+
+```bash
+./scripts/check_system.sh
+```
+
+---
+
+## Run Tests
+
+```bash
+pytest -v
+```
+
+Current regression status:
+
+```
+142 passed
+```
 
 # Current Version
 

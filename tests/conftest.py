@@ -7,8 +7,9 @@ from app.extensions import db
 @pytest.fixture(scope="session")
 def app():
 
-    app = create_app()
-    app.config.from_object("app.config.testing.TestingConfig")
+    app = create_app(
+        "app.config.testing.TestingConfig"
+    )
 
     yield app
 
