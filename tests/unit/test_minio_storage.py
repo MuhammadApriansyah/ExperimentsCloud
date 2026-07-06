@@ -19,11 +19,10 @@ def test_file_path_not_implemented():
 
     with pytest.raises(NotImplementedError):
 
-        StorageKeyBuilder.user_directory(
+        storage.file_path(
             1,
             "hello.txt",
         )
-
 
 def test_save_not_implemented():
 

@@ -18,8 +18,6 @@ from app.services.file_metadata_service import (
 
 from app.storage.manager import get_storage
 
-from app.storage.key_builder import StorageKeyBuilder
-
 
 class FileService:
 
@@ -53,7 +51,7 @@ class FileService:
             extension
         )
 
-        destination = StorageKeyBuilder.user_file(
+        destination = storage.file_path(
             user.id,
             stored_name,
         )
@@ -122,7 +120,7 @@ class FileService:
 
         storage = get_storage()
 
-        path = StorageKeyBuilder.user_file(
+        path = storage.file_path(
             file.owner_id,
             file.stored_name,
         )

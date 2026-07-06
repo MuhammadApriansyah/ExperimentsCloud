@@ -27,8 +27,8 @@ from app.constants.messages import (
 
 from app.files import files
 from app.files.services import FileService
-from app.services.storage_service import StorageService
 from app.services.logging_service import logger
+from app.storage.manager import get_storage
 
 @files.route("/")
 @login_required
@@ -77,18 +77,23 @@ def download(file_id):
 
     file = FileService.get_user_file(
         file_id,
-        current_user.id
+        current_user.id,
     )
 
     if file is None:
         abort(404)
 
-    path = StorageService.file_path(
+    storage = get_storage()
+
+    path = storage.file_path(
         current_user.id,
         file.stored_name,
     )
 
-    if not StorageService.exists(path):
+    print(path)
+    print(storage.exists(path))
+
+    if not storage.exists(path):
         abort(404)
 
     logger.info(

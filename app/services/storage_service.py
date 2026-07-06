@@ -21,12 +21,8 @@ class StorageService:
     ) -> Path:
         return (
             current_app.config["USER_STORAGE"]
-            / Path(
-                StorageKeyBuilder.user_file(
-                    user_id,
-                    stored_name,
-                )
-            )
+            / str(user_id)
+            / stored_name
         )
 
     @staticmethod

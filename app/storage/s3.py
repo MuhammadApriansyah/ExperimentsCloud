@@ -6,6 +6,8 @@ from app.storage.backend import StorageBackend
 
 from botocore.exceptions import ClientError
 
+from app.storage.key_builder import StorageKeyBuilder
+
 
 class S3Storage(StorageBackend):
 
@@ -87,3 +89,17 @@ class S3Storage(StorageBackend):
         )
 
         return response["Body"]
+
+    def key(
+        self,
+        user_id,
+        stored_name,
+    ):
+        return StorageKeyBuilder.user_file(
+            user_id,
+            stored_name,
+        )
+
+
+    def resolve(self, key):
+        return key

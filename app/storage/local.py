@@ -2,6 +2,7 @@ from pathlib import Path
 import shutil
 
 from .backend import StorageBackend
+from app.storage.key_builder import StorageKeyBuilder
 
 
 class LocalStorage(StorageBackend):
@@ -9,12 +10,38 @@ class LocalStorage(StorageBackend):
     def __init__(self, root: Path):
         self.root = Path(root)
 
-    def _resolve(self, destination: str | Path) -> Path:
-        return self.root / Path(destination)
+    def resolve(self, key: str | Path) -> Path:
+        return self.root / Path(key)
 
-    def save(self, source, destination: str | Path):
+    def key(
+        self,
+        user_id: int,
+        stored_name: str,
+    ) -> str:
+        return StorageKeyBuilder.user_file(
+            user_id,
+            stored_name,
+        )
 
-        target = self._resolve(destination)
+    def file_path(
+        self,
+        user_id: int,
+        stored_name: str,
+    ) -> Path:
+        return self.resolve(
+            self.key(
+                user_id,
+                stored_name,
+            )
+        )
+
+    def save(
+        self,
+        source,
+        destination,
+    ):
+
+        target = self.resolve(destination)
 
         target.parent.mkdir(
             parents=True,
@@ -23,7 +50,6 @@ class LocalStorage(StorageBackend):
 
         if hasattr(source, "save"):
             source.save(target)
-
         else:
             shutil.copy2(
                 Path(source),
@@ -32,24 +58,14 @@ class LocalStorage(StorageBackend):
 
         return target
 
-    def exists(self, path: str | Path) -> bool:
-        return self._resolve(path).exists()
+    def exists(self, path):
+        return self.resolve(path).exists()
 
-    def delete(self, path: str | Path):
-        target = self._resolve(path)
+    def delete(self, path):
+        target = self.resolve(path)
 
         if target.exists():
             target.unlink()
 
-    def open(self, path: str | Path):
-        return self._resolve(path).open("rb")
-
-    def file_path(
-        self,
-        user_id: int,
-        stored_name: str,
-    ):
-        return (
-            Path(str(user_id))
-            / stored_name
-        )
+    def open(self, path):
+        return self.resolve(path).open("rb")

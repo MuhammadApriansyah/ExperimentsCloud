@@ -1,3 +1,4 @@
+from pathlib import Path
 from io import BytesIO
 from unittest.mock import Mock, patch
 
@@ -88,9 +89,7 @@ def test_delete(app):
 @patch("app.files.services.FileValidator.validate_size")
 @patch("app.files.services.FileValidator.validate_extension")
 @patch("app.files.services.get_storage")
-@patch("app.files.services.StorageKeyBuilder")
 def test_upload(
-    storage_key_builder_mock,
     get_storage_mock,
     validate_extension_mock,
     validate_size_mock,
@@ -100,8 +99,10 @@ def test_upload(
 ):
 
     mock_storage = Mock()
+    mock_storage.file_path.return_value = Path(
+        "users/1/example.txt"
+    )
     get_storage_mock.return_value = mock_storage
-    storage_key_builder_mock.user_file.return_value = Mock()
 
     with app.app_context():
 
@@ -121,7 +122,10 @@ def test_upload(
             user,
         )
 
-        storage_key_builder_mock.user_file.assert_called_once()
+        mock_storage.file_path.assert_called_once_with(
+            user.id,
+            generate_name_mock.return_value,
+        )
 
         mock_storage.save.assert_called_once()
 

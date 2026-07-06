@@ -1,7 +1,7 @@
 from app.extensions import db
 from app.models.file_metadata import FileMetadata
 
-from app.services.storage_service import StorageService
+from app.storage.manager import get_storage
 from app.services.metadata_generator import MetadataGenerator
 from app.services.video_metadata_service import VideoMetadataService
 
@@ -11,7 +11,9 @@ class FileMetadataService:
     @staticmethod
     def create(file):
 
-        path = StorageService.file_path(
+        storage = get_storage()
+
+        path = storage.file_path(
             file.owner_id,
             file.stored_name,
         )
