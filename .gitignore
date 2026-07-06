@@ -4,6 +4,7 @@ htmlcov/
 
 # Test cache
 .pytest_cache/
+pytest.log
 
 # Python cache
 __pycache__/
@@ -27,6 +28,7 @@ storage/trash/*
 
 # Database
 database/*.db
+!database/.gitkeep
 
 # Local terminal recording
 log.txt

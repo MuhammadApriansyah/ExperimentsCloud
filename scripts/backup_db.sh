@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/usr/bin/env bash
 source "$(dirname "$0")/lib/common.sh"
 
 DATABASE="$ROOT_DIR/database/experiments.db"
