@@ -31,13 +31,13 @@ check_remote() {
 check_clean_tree() {
 
     if git diff --quiet && git diff --cached --quiet; then
-
         pass "Working tree clean"
-
-    else
-
-        warn "Working tree dirty"
-
+        return
     fi
 
+    warn "Working tree dirty"
+
+    git status --short | while read -r line; do
+        printf "      %s\n" "$line"
+    done
 }

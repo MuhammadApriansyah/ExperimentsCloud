@@ -1,34 +1,29 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
-echo "========================================"
-echo "ExperimentsCloud Verification"
-echo "========================================"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo
-echo "[1/3] Static checks..."
-bash scripts/check.sh
+source "$SCRIPT_DIR/lib/common.sh"
+source "$SCRIPT_DIR/lib/output.sh"
 
-echo
-echo "[2/3] Application factory..."
+print_header
+print_action "Verify"
 
-python -c "
-from app import create_app
+print_section "Compile"
 
-app = create_app()
+python -m compileall app >/dev/null
+pass "compileall"
 
-print('Application OK')
-"
+print_section "Tests"
 
-echo
-echo "[3/3] Configuration..."
+pytest -q --disable-warnings
+pass "pytest"
 
-python -c "
-from app.config import get_config
+print_section "Health"
 
-print(get_config().__name__)
-"
+"$SCRIPT_DIR/doctor.sh"
+pass "doctor"
 
 echo
-echo "Verification completed successfully."
+pass "Project verification successful"
