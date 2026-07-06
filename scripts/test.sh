@@ -10,6 +10,8 @@ echo
 
 START=$(date +%s)
 
+echo
+
 pytest || fail "Test suite failed"
 
 END=$(date +%s)

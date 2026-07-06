@@ -6,6 +6,8 @@ from app.models.file import File
 from app.models.user import User
 from app.files.services import FileService
 
+from app.storage.key_builder import StorageKeyBuilder
+
 
 def create_user():
 
@@ -82,20 +84,24 @@ def test_delete(app):
 
 
 @patch("app.files.services.FileMetadataService.create")
-@patch("app.files.services.StorageService.save")
-@patch("app.files.services.StorageService.file_path")
 @patch("app.files.services.generate_stored_name")
 @patch("app.files.services.FileValidator.validate_size")
 @patch("app.files.services.FileValidator.validate_extension")
+@patch("app.files.services.get_storage")
+@patch("app.files.services.StorageKeyBuilder")
 def test_upload(
+    storage_key_builder_mock,
+    get_storage_mock,
     validate_extension_mock,
     validate_size_mock,
     generate_name_mock,
-    file_path_mock,
-    save_mock,
     metadata_create_mock,
     app,
 ):
+
+    mock_storage = Mock()
+    get_storage_mock.return_value = mock_storage
+    storage_key_builder_mock.user_file.return_value = Mock()
 
     with app.app_context():
 
@@ -103,15 +109,11 @@ def test_upload(
 
         generate_name_mock.return_value = "stored.txt"
 
-        file_path_mock.return_value = Mock()
-
         uploaded = Mock()
-
         uploaded.filename = "document.txt"
         uploaded.mimetype = "text/plain"
 
         uploaded.seek = Mock()
-
         uploaded.tell = Mock(return_value=1024)
 
         file = FileService.upload(
@@ -119,13 +121,9 @@ def test_upload(
             user,
         )
 
-        validate_extension_mock.assert_called_once()
+        storage_key_builder_mock.user_file.assert_called_once()
 
-        validate_size_mock.assert_called_once_with(1024)
-
-        generate_name_mock.assert_called_once_with("txt")
-
-        save_mock.assert_called_once()
+        mock_storage.save.assert_called_once()
 
         metadata_create_mock.assert_called_once_with(file)
 

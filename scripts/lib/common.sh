@@ -13,7 +13,7 @@ header() {
 
     echo
     echo "========================================"
-    echo " ExperimentsCloud Utility"
+    echo "        ExperimentsCloud Utility"
     echo "========================================"
     echo
 

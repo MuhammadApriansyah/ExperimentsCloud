@@ -2,12 +2,14 @@ from unittest.mock import Mock
 
 from app.services.storage_service import StorageService
 
+from app.storage.key_builder import StorageKeyBuilder
+
 
 def test_user_directory(app):
 
     with app.app_context():
 
-        path = StorageService.user_directory(10)
+        path = StorageKeyBuilder.user_file(10)
 
         assert path == app.config["USER_STORAGE"] / "10"
 
@@ -16,7 +18,7 @@ def test_file_path(app):
 
     with app.app_context():
 
-        path = StorageService.file_path(
+        path = StorageKeyBuilder.file_path(
             5,
             "example.txt",
         )

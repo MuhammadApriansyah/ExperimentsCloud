@@ -10,14 +10,15 @@ from app.files.validators import (
     FileValidator,
 )
 
-from app.services.storage_service import (
-    StorageService,
-)
 from app.services.logging_service import logger
 
 from app.services.file_metadata_service import (
     FileMetadataService,
 )
+
+from app.storage.manager import get_storage
+
+from app.storage.key_builder import StorageKeyBuilder
 
 
 class FileService:
@@ -28,6 +29,8 @@ class FileService:
         user,
         folder=None,
     ):
+
+        storage = get_storage()
 
         FileValidator.validate_extension(
             uploaded_file.filename
@@ -50,12 +53,12 @@ class FileService:
             extension
         )
 
-        destination = StorageService.file_path(
+        destination = StorageKeyBuilder.user_file(
             user.id,
             stored_name,
         )
 
-        StorageService.save(
+        storage.save(
             uploaded_file,
             destination,
         )
@@ -117,12 +120,14 @@ class FileService:
     @staticmethod
     def delete(file):
 
-        path = StorageService.file_path(
+        storage = get_storage()
+
+        path = StorageKeyBuilder.user_file(
             file.owner_id,
             file.stored_name,
         )
 
-        StorageService.delete(path)
+        storage.delete(path)
 
         db.session.delete(file)
 

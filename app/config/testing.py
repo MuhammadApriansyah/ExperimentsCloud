@@ -8,3 +8,5 @@ class TestingConfig(BaseConfig):
     WTF_CSRF_ENABLED = False
 
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+
+    STORAGE_BACKEND = "local"

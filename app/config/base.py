@@ -55,4 +55,11 @@ class BaseConfig:
 
     TESTING = False
 
+    # Storage Backend
+    STORAGE_BACKEND = "local"
 
+    # AWS S3
+    AWS_ACCESS_KEY_ID = ""
+    AWS_SECRET_ACCESS_KEY = ""
+    AWS_REGION = "ap-southeast-1"
+    AWS_BUCKET = ""

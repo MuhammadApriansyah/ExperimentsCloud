@@ -2,6 +2,8 @@ from pathlib import Path
 
 from flask import current_app
 
+from app.storage.key_builder import StorageKeyBuilder
+
 
 class StorageService:
 
@@ -13,10 +15,18 @@ class StorageService:
         )
 
     @staticmethod
-    def file_path(user_id: int, stored_name: str) -> Path:
+    def file_path(
+        user_id: int,
+        stored_name: str,
+    ) -> Path:
         return (
-            StorageService.user_directory(user_id)
-            / stored_name
+            current_app.config["USER_STORAGE"]
+            / Path(
+                StorageKeyBuilder.user_file(
+                    user_id,
+                    stored_name,
+                )
+            )
         )
 
     @staticmethod
