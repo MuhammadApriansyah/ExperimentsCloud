@@ -28,7 +28,7 @@ class S3Storage(StorageBackend):
             ],
         )
 
-    def file_path(
+    def object_key(
         self,
         user_id: int,
         stored_name: str,

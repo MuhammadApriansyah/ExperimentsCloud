@@ -13,7 +13,7 @@ class FileMetadataService:
 
         storage = get_storage()
 
-        path = storage.file_path(
+        path = storage.object_key(
             file.owner_id,
             file.stored_name,
         )

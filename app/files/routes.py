@@ -85,7 +85,7 @@ def download(file_id):
 
     storage = get_storage()
 
-    key = storage.file_path(
+    key = storage.object_key(
         current_user.id,
         file.stored_name,
     )

@@ -13,13 +13,13 @@ def test_minio_storage_is_backend():
     )
 
 
-def test_file_path_not_implemented():
+def test_object_key_not_implemented():
 
     storage = MinIOStorage()
 
     with pytest.raises(NotImplementedError):
 
-        storage.file_path(
+        storage.object_key(
             1,
             "hello.txt",
         )

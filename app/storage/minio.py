@@ -21,7 +21,7 @@ class MinIOStorage(StorageBackend):
     def resolve(self, key):
         return key
 
-    def file_path(
+    def object_key(
         self,
         user_id: int,
         stored_name: str,

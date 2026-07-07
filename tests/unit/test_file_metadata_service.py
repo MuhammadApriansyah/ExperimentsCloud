@@ -30,7 +30,7 @@ def create_file(app, user):
 
     stored_name = "example.txt"
 
-    path = StorageService.file_path(
+    path = StorageService.object_key(
         user.id,
         stored_name,
     )
@@ -59,7 +59,7 @@ def create_video_file(app, user):
 
     stored_name = "video.mp4"
 
-    path = StorageService.file_path(
+    path = StorageService.object_key(
         user.id,
         stored_name,
     )
@@ -191,7 +191,7 @@ def create_pdf_file(app, user, pages=3):
 
     stored_name = "example.pdf"
 
-    path = StorageService.file_path(
+    path = StorageService.object_key(
         user.id,
         stored_name,
     )
@@ -230,7 +230,7 @@ def create_audio_file(app, user):
 
     stored_name = "example.mp3"
 
-    path = StorageService.file_path(
+    path = StorageService.object_key(
         user.id,
         stored_name,
     )

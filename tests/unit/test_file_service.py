@@ -99,7 +99,7 @@ def test_upload(
 ):
 
     mock_storage = Mock()
-    mock_storage.file_path.return_value = Path(
+    mock_storage.object_key.return_value = Path(
         "users/1/example.txt"
     )
     get_storage_mock.return_value = mock_storage
@@ -122,7 +122,7 @@ def test_upload(
             user,
         )
 
-        mock_storage.file_path.assert_called_once_with(
+        mock_storage.object_key.assert_called_once_with(
             user.id,
             generate_name_mock.return_value,
         )

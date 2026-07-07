@@ -51,7 +51,7 @@ class FileService:
             extension
         )
 
-        destination = storage.file_path(
+        destination = storage.object_key(
             user.id,
             stored_name,
         )
@@ -120,7 +120,7 @@ class FileService:
 
         storage = get_storage()
 
-        path = storage.file_path(
+        path = storage.object_key(
             file.owner_id,
             file.stored_name,
         )

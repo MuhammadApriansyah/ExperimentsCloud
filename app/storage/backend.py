@@ -4,11 +4,22 @@ from abc import ABC, abstractmethod
 class StorageBackend(ABC):
 
     @abstractmethod
-    def file_path(
+    def object_key(
         self,
         user_id: int,
         stored_name: str,
     ):
+        """
+        Return backend-specific object identifier.
+
+        LocalStorage:
+            users/1/file.txt
+        S3:
+            users/1/file.txt
+        MinIO:
+            users/1/file.txt
+
+        """
         pass
 
     @abstractmethod

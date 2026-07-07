@@ -23,7 +23,7 @@ class LocalStorage(StorageBackend):
             stored_name,
         )
 
-    def file_path(
+    def object_key(
         self,
         user_id: int,
         stored_name: str,

@@ -17,11 +17,11 @@ def test_user_directory(app):
         assert path == app.config["USER_STORAGE"] / "10"
 
 
-def test_file_path(app):
+def test_object_key(app):
 
     with app.app_context():
 
-        path = StorageService.file_path(
+        path = StorageService.object_key(
             5,
             "example.txt",
         )

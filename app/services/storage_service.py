@@ -15,7 +15,7 @@ class StorageService:
         )
 
     @staticmethod
-    def file_path(
+    def object_key(
         user_id: int,
         stored_name: str,
     ) -> Path:
