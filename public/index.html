@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Workspace | Storage Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Animasi Kustom & Transisi Halus */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        #dragOverlay.active { display: flex !important; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased h-screen flex overflow-hidden">
+
+    <div id="authModal" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center fade-in">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
+            <div class="text-center mb-6">
+                <i class="fa-solid fa-cloud-arrow-up text-4xl text-blue-600 mb-3"></i>
+                <h2 class="text-2xl font-bold text-slate-800">Authentication Required</h2>
+                <p class="text-sm text-slate-500 mt-1">Provide your access token to establish connection.</p>
+            </div>
+            <div class="space-y-4">
+                <input type="password" id="apiTokenInput" placeholder="Enter Access Token..." 
+                    class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                <button onclick="authenticate()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors">
+                    Connect to Server
+                </button>
+            </div>
+            <p id="authStatus" class="text-center text-sm font-medium mt-4 text-red-500 hidden"></p>
+        </div>
+    </div>
+
+    <div id="mainDashboard" class="flex-1 flex flex-col h-full opacity-0 pointer-events-none transition-opacity duration-500">
+        
+        <header class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-server text-blue-600 text-xl"></i>
+                <h1 class="text-xl font-bold text-slate-800">Storage Engine <span class="text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded-full ml-2">v2.0</span></h1>
+            </div>
+            <button onclick="logout()" class="text-sm text-slate-500 hover:text-red-600 transition-colors">
+                <i class="fa-solid fa-power-off mr-1"></i> Disconnect
+            </button>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-8 relative">
+            <div class="max-w-6xl mx-auto space-y-8">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="text-slate-500 text-sm font-medium mb-1">Total Files</div>
+                        <div id="statTotalFiles" class="text-3xl font-bold text-slate-800">0</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="text-slate-500 text-sm font-medium mb-1">Total Storage Used</div>
+                        <div id="statTotalSize" class="text-3xl font-bold text-slate-800">0 B</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="text-slate-500 text-sm font-medium mb-1">Connection Status</div>
+                        <div class="text-lg font-bold text-emerald-600 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> Connected
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dropZone" class="border-2 border-dashed border-blue-300 bg-blue-50/50 hover:bg-blue-50 transition-colors rounded-2xl p-10 text-center cursor-pointer relative group">
+                    <input type="file" id="fileUploadInput" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="handleFileSelect(event)">
+                    <div class="pointer-events-none">
+                        <i class="fa-solid fa-cloud-arrow-up text-5xl text-blue-500 mb-4 group-hover:scale-110 transition-transform duration-300"></i>
+                        <h3 class="text-xl font-bold text-slate-700">Drag & Drop files here</h3>
+                        <p class="text-slate-500 mt-2">or click to browse from your device</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
+                        <h3 class="font-semibold text-slate-800">Directory Contents</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="text-slate-500 text-xs uppercase tracking-wider bg-white">
+                                    <th class="px-6 py-4 font-medium">Filename</th>
+                                    <th class="px-6 py-4 font-medium">Size</th>
+                                    <th class="px-6 py-4 font-medium">Uploaded At</th>
+                                    <th class="px-6 py-4 font-medium text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fileTableBody" class="divide-y divide-slate-100">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toastContainer" class="fixed bottom-6 right-6 flex flex-col gap-3 z-50"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
