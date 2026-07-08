@@ -1,4 +1,4 @@
-const API_URL = 'https://[grid-removed-toolbar-railroad].trycloudflare.com/api/v1';
+const API_URL = 'https://grid-removed-toolbar-railroad.trycloudflare.com/api/v1';
 let accessToken = null;
 
 /* =========================================
